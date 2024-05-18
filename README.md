@@ -140,7 +140,7 @@ NoxVenenum is an experimental project for learning purposes. It's a REST API bui
    
 3. **Navigate to the Project Directory:**
    ```bash
-   cd NoxVenenum
+   cd RestApi
    ```
 
 4. **Install Dependencies:**
