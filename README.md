@@ -4,14 +4,14 @@
 </p>
 <h1 align="center">NoxVenenum</h1>
 
-<a href="https://github.com/Pkok1024/NoxVenenum/network/members"><img title="Forks" src="https://img.shields.io/github/forks/Pkok1024/NoxVenenum?label=Forks&color=blue&style=flat-square"></a>
-<a href="https://github.com/Pkok1024/NoxVenenum/lwatchers"><img title="Watchers" src="https://img.shields.io/github/watchers/Pkok1024/NoxVenenum?label=Watchers&color=green&style=flat-square"></a>
-<a href="https://github.com/Pkok1024/NoxVenenum/stargazers"><img title="Stars" src="https://img.shields.io/github/stars/Pkok1024/NoxVenenum?label=Stars&color=yellow&style=flat-square"></a>
-<a href="https://github.com/Pkok1024/NoxVenenum/graphs/contributors"><img title="Contributors" src="https://img.shields.io/github/contributors/Pkok1024/NoxVenenum?label=Contributors&color=blue&style=flat-square"></a>
-<a href="https://github.com/Pkok1024/NoxVenenum/issues"><img title="Issues" src="https://img.shields.io/github/issues/Pkok1024/NoxVenenum?label=Issues&color=success&style=flat-square"></a>
-<a href="https://github.com/Pkok1024/NoxVenenum/issues?q=is%3Aissue+is%3Aclosed"><img title="Issues" src="https://img.shields.io/github/issues-closed/Pkok1024/NoxVenenum?label=Issues&color=red&style=flat-square"></a>
-<a href="https://github.com/Pkok1024/NoxVenenum/pulls"><img title="Pull Request" src="https://img.shields.io/github/issues-pr/Pkok1024/NoxVenenum?label=PullRequest&color=success&style=flat-square"></a>
-<a href="https://github.com/Pkok1024/NoxVenenum/pulls?q=is%3Apr+is%3Aclosed"><img title="Pull Request" src="https://img.shields.io/github/issues-pr-closed/Pkok1024/NoxVenenum?label=PullRequest&color=red&style=flat-square"></a>
+<a href="https://github.com/Pkok1024/RestApi/network/members"><img title="Forks" src="https://img.shields.io/github/forks/Pkok1024/RestApi?label=Forks&color=blue&style=flat-square"></a>
+<a href="https://github.com/Pkok1024/RestApi/lwatchers"><img title="Watchers" src="https://img.shields.io/github/watchers/Pkok1024/RestApi?label=Watchers&color=green&style=flat-square"></a>
+<a href="https://github.com/Pkok1024/RestApi/stargazers"><img title="Stars" src="https://img.shields.io/github/stars/Pkok1024/RestApi?label=Stars&color=yellow&style=flat-square"></a>
+<a href="https://github.com/Pkok1024/RestApi/graphs/contributors"><img title="Contributors" src="https://img.shields.io/github/contributors/Pkok1024/RestApi?label=Contributors&color=blue&style=flat-square"></a>
+<a href="https://github.com/Pkok1024/RestApi/issues"><img title="Issues" src="https://img.shields.io/github/issues/Pkok1024/RestApi?label=Issues&color=success&style=flat-square"></a>
+<a href="https://github.com/Pkok1024/RestApi/issues?q=is%3Aissue+is%3Aclosed"><img title="Issues" src="https://img.shields.io/github/issues-closed/Pkok1024/RestApi?label=Issues&color=red&style=flat-square"></a>
+<a href="https://github.com/Pkok1024/RestApi/pulls"><img title="Pull Request" src="https://img.shields.io/github/issues-pr/Pkok1024/RestApi?label=PullRequest&color=success&style=flat-square"></a>
+<a href="https://github.com/Pkok1024/RestApi/pulls?q=is%3Apr+is%3Aclosed"><img title="Pull Request" src="https://img.shields.io/github/issues-pr-closed/Pkok1024/RestApi?label=PullRequest&color=red&style=flat-square"></a>
 
 ***
 
@@ -135,7 +135,7 @@ NoxVenenum is an experimental project for learning purposes. It's a REST API bui
 
 2. **Clone the Repository:**
    ```bash
-   git clone https://github.com/Pkok1024/NoxVenenum
+   git clone https://github.com/Pkok1024/RestApi
    ```
    
 3. **Navigate to the Project Directory:**
