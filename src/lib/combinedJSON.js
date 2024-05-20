@@ -163,6 +163,7 @@ const writeFileWithSpinner = async (filePath, data) => {
 }
 ;(async () => {
   try {
+  if (!process.env.NODE_ENV === 'development') return
     const dir = dirname(fileURLToPath(import.meta.url))
     const json = JSON.stringify(await CombinedJSON(), null, 2)
 

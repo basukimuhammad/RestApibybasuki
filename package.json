@@ -42,17 +42,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Pkok1024/NoxVenenum.git"
+    "url": "git+https://github.com/Pkok1024/RestApi.git"
   },
   "keywords": [
-    "rest-api"
+    "rest-api",
+    "restapi",
+    "api"
   ],
   "author": ".M.U.F.A.R.",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Pkok1024/NoxVenenum/issues"
+    "url": "https://github.com/Pkok1024/RestApi/issues"
   },
-  "homepage": "https://github.com/Pkok1024/NoxVenenum#readme",
+  "homepage": "https://github.com/Pkok1024/RestApi#readme",
   "devDependencies": {
     "prettier": "3.2.5"
   }
