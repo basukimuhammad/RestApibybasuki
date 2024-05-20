@@ -29,13 +29,13 @@ function createRandomEndpoint(country) {
               'xiaopangju',
             ],
           },
-          description: 'Country name',
+          description: 'List name',
         },
       ],
       responses: {
         200: {
           content: {
-            'image/*': {},
+            'image/jpeg': {},
           },
         },
       },

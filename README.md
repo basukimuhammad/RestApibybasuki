@@ -13,7 +13,7 @@
 <a href="https://github.com/Pkok1024/RestApi/pulls"><img title="Pull Request" src="https://img.shields.io/github/issues-pr/Pkok1024/RestApi?label=PullRequest&color=success&style=flat-square"></a>
 <a href="https://github.com/Pkok1024/RestApi/pulls?q=is%3Apr+is%3Aclosed"><img title="Pull Request" src="https://img.shields.io/github/issues-pr-closed/Pkok1024/RestApi?label=PullRequest&color=red&style=flat-square"></a>
 
-***
+---
 
 <h1 align="center">example</h1>
 <p align="center">
@@ -76,7 +76,7 @@ NoxVenenum is an experimental project for learning purposes. It's a REST API bui
 
 - GET /misc/runtime
 - GET /misc/clock
-- 
+-
 - **MyAnimeList:**
 
 - GET /myanimelist/search
@@ -131,24 +131,27 @@ NoxVenenum is an experimental project for learning purposes. It's a REST API bui
 ## Installation
 
 1. **Prerequisites:**
+
    - Ensure you have Node.js installed on your computer.
 
 2. **Clone the Repository:**
    ```bash
    git clone https://github.com/Pkok1024/RestApi
    ```
-   
 3. **Navigate to the Project Directory:**
+
    ```bash
    cd RestApi
    ```
 
 4. **Install Dependencies:**
+
    ```bash
    npm install
    ```
 
 5. **Run the Server:**
+
    - For production:
      ```bash
      npm start

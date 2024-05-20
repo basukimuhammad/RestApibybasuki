@@ -47,7 +47,10 @@ routerDocs.use('/docs', serve, async (req, res, next) => {
       },
       url: '/docs/',
       customCssUrl: '/assets/css/custom.css',
-      customJs: ['/assets/js/custom2.js', '/assets/js/custom.js'],
+      customJs: [
+      // '/assets/js/custom2.js', // Particle optional 
+       // '/assets/js/custom.js' // background changers optional 
+       ],
       customfavIcon: '/assets/img/favicon.ico',
       customSiteTitle: author,
       explorer: false,

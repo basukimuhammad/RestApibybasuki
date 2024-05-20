@@ -2,9 +2,9 @@
 
 import express from 'express'
 import cors from 'cors'
-import { fileURLToPath } from 'url'
 import path, { dirname } from 'path'
 import fs from 'fs/promises'
+import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const apiRouter = express.Router()
@@ -13,31 +13,39 @@ apiRouter.use(cors())
 apiRouter.use(express.urlencoded({ extended: true }))
 apiRouter.use(express.json())
 
-const importRoutes = async (routeModule) => {
+const importRoutes = async routeModule => {
   try {
-    const { default: routeHandler } = await import(`./api/${routeModule}`)
+    const routeHandler = (await import(`./api/${routeModule}`)).default
     if (typeof routeHandler === 'function') {
-      apiRouter.use(`/${routeModule.replace('.js', '')}`, routeHandler)
+      const routeName = routeModule.replace('.js', '')
+      apiRouter.use(`/${routeName}`, routeHandler)
+
+      const routePaths = routeHandler.stack
+        .map(layer => {
+          if (layer.route) {
+            return layer.route.path
+          }
+        })
+        .filter(path => path !== undefined)
+
+      console.log(`Loaded route: /${routeName} with paths:`, routePaths)
     } else {
-      console.error(`No valid default function found in ${routeModule}`)
+      console.error(`Invalid route handler in ${routeModule}`)
     }
   } catch (error) {
-    console.error(`Error importing routes from ${routeModule}:`, error)
+    console.error(`Error importing ${routeModule}:`, error)
   }
 }
-
- (async () => {
+;(async () => {
   try {
     const routeFiles = await fs.readdir(path.resolve(__dirname, 'api'))
     const routeModules = routeFiles.filter(
-      (file) => file.endsWith('.js') && file !== 'router.js'
+      file => file.endsWith('.js') && file !== 'router.js'
     )
-
     await Promise.all(routeModules.map(importRoutes))
   } catch (error) {
-    console.error('Error reading route modules:', error)
+    console.error('Error loading routes:', error)
   }
 })()
-
 
 export default apiRouter

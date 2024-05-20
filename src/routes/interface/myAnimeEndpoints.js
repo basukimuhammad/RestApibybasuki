@@ -7,7 +7,7 @@ const swaggerDoc = {
       summary: 'Search for anime or manga on MyAnimeList',
       parameters: [
         {
-          name: 'querystring',
+          name: 'name',
           in: 'query',
           description: 'The search query',
           required: true,
@@ -29,6 +29,13 @@ const swaggerDoc = {
       responses: {
         200: {
           description: 'Successful response',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/SuccessResponse',
+              },
+            },
+          },
         },
       },
     },
@@ -82,7 +89,7 @@ const swaggerDoc = {
           content: {
             'application/json': {
               schema: {
-                type: 'object',
+                $ref: '#/components/schemas/SuccessResponse',
               },
             },
           },
@@ -137,10 +144,12 @@ const swaggerDoc = {
       ],
       responses: {
         200: {
-          description: 'Successful operation',
+          description: 'Successful response',
           content: {
             'application/json': {
-              schema: {},
+              schema: {
+                $ref: '#/components/schemas/SuccessResponse',
+              },
             },
           },
         },
@@ -165,25 +174,11 @@ const swaggerDoc = {
       ],
       responses: {
         200: {
-          description: 'List of anime news articles',
+          description: 'Successful response',
           content: {
             'application/json': {
               schema: {
-                type: 'array',
-                items: {
-                  type: 'object',
-                  properties: {
-                    title: {
-                      type: 'string',
-                    },
-                    link: {
-                      type: 'string',
-                    },
-                    date: {
-                      type: 'string',
-                    },
-                  },
-                },
+                $ref: '#/components/schemas/SuccessResponse',
               },
             },
           },
@@ -191,7 +186,7 @@ const swaggerDoc = {
       },
     },
   },
-  '/myanimelist/anime-info': {
+  '/myanimelist/info-anime': {
     get: {
       tags: ['MyAnimeList'],
       summary: 'Mendapatkan informasi anime berdasarkan nama',
@@ -229,10 +224,12 @@ const swaggerDoc = {
       ],
       responses: {
         200: {
-          description: 'Sukses mendapatkan informasi anime',
+          description: 'Successful response',
           content: {
             'application/json': {
-              schema: {},
+              schema: {
+                $ref: '#/components/schemas/SuccessResponse',
+              },
             },
           },
         },
@@ -261,15 +258,7 @@ const swaggerDoc = {
           content: {
             'application/json': {
               schema: {
-                type: 'object',
-                properties: {
-                  title: {
-                    type: 'string',
-                  },
-                  episodes: {
-                    type: 'integer',
-                  },
-                },
+                $ref: '#/components/schemas/SuccessResponse',
               },
             },
           },
@@ -303,12 +292,11 @@ const swaggerDoc = {
       ],
       responses: {
         200: {
-          description: 'Episodes list retrieved successfully',
+          description: 'Successful response',
           content: {
             'application/json': {
               schema: {
-                type: 'object',
-                properties: {},
+                $ref: '#/components/schemas/SuccessResponse',
               },
             },
           },
@@ -357,12 +345,11 @@ const swaggerDoc = {
       ],
       responses: {
         200: {
-          description: 'List of anime reviews',
+          description: 'Successful response',
           content: {
             'application/json': {
               schema: {
-                type: 'object',
-                properties: {},
+                $ref: '#/components/schemas/SuccessResponse',
               },
             },
           },
@@ -396,11 +383,11 @@ const swaggerDoc = {
       ],
       responses: {
         200: {
-          description: 'Successful operation',
+          description: 'Successful response',
           content: {
             'application/json': {
               schema: {
-                type: 'object',
+                $ref: '#/components/schemas/SuccessResponse',
               },
             },
           },
@@ -434,11 +421,11 @@ const swaggerDoc = {
       ],
       responses: {
         200: {
-          description: 'Successful operation',
+          description: 'Successful response',
           content: {
             'application/json': {
               schema: {
-                type: 'object',
+                $ref: '#/components/schemas/SuccessResponse',
               },
             },
           },
@@ -472,11 +459,11 @@ const swaggerDoc = {
       ],
       responses: {
         200: {
-          description: 'Successful operation',
+          description: 'Successful response',
           content: {
             'application/json': {
               schema: {
-                type: 'object',
+                $ref: '#/components/schemas/SuccessResponse',
               },
             },
           },
@@ -487,11 +474,12 @@ const swaggerDoc = {
   '/myanimelist/user': {
     get: {
       tags: ['MyAnimeList'],
+      deprecated: true,
       summary: 'Get anime picture',
       parameters: [
         {
           in: 'query',
-          name: 'name',
+          name: 'username',
           required: true,
           description: 'The name of the anime',
           schema: {
@@ -501,11 +489,11 @@ const swaggerDoc = {
       ],
       responses: {
         200: {
-          description: 'Successful operation',
+          description: 'Successful response',
           content: {
             'application/json': {
               schema: {
-                type: 'object',
+                $ref: '#/components/schemas/SuccessResponse',
               },
             },
           },

@@ -4,107 +4,113 @@ import fs from 'fs/promises'
 import path from 'path'
 
 /**
- * Function to convert Swagger JSON paths to JSDoc @swagger annotations
- * @param {string} inputFile - Path to the Swagger JSON file
- * @param {string} outputFile - Path to the output JS file
+ * Function to convert Swagger JSON paths to JSDoc @swagger annotations.
+ * @param {string} swaggerJsonString - The raw Swagger JSON string.
+ * @returns {string} The JSDoc annotations string.
  */
-export default async function convertSwaggerPathsToJsDoc(inputFile) {
+export default async function convertSwaggerPathsToJsDoc(swaggerJsonString) {
   try {
-    // Read the Swagger JSON file asynchronously
-    // const data = await fs.readFile(inputFile, 'utf8')
-    const swaggerJson = JSON.parse(inputFile)
+    const swaggerJson = JSON.parse(swaggerJsonString)
+    const jsDocLines = []
 
-    // Initialize an empty array to hold JSDoc lines
-    let jsDocLines = []
-
-    // Process each path in the Swagger JSON
-    for (let route in swaggerJson.paths) {
-      for (let method in swaggerJson.paths[route]) {
+    // Iterate through paths in the Swagger JSON
+    for (const route in swaggerJson.paths) {
+      for (const method in swaggerJson.paths[route]) {
         const endpoint = swaggerJson.paths[route][method]
+        jsDocLines.push('/**')
+        jsDocLines.push(' * @swagger')
 
-        jsDocLines.push(`\n/**`)
-        jsDocLines.push(` * @swagger`)
+        // Construct the basic endpoint information
         jsDocLines.push(` * ${route}:`)
-        jsDocLines.push(` *   ${method}:`)
+        jsDocLines.push(` *   ${method.toUpperCase()}:`) // Use uppercase for HTTP methods
 
+        // Add tags if available
         if (endpoint.tags) {
-          jsDocLines.push(` *     tags:`)
-          endpoint.tags.forEach(tag => {
-            jsDocLines.push(` *       - ${tag}`)
-          })
+          jsDocLines.push(' *   tags:')
+          endpoint.tags.forEach(tag => jsDocLines.push(` *    - ${tag}`))
         }
 
-        if (endpoint.summary)
-          jsDocLines.push(` *     summary: ${endpoint.summary}`)
-        if (endpoint.description)
-          jsDocLines.push(` *     description: ${endpoint.description}`)
+        // Add summary and description if available
+        if (endpoint.summary) {
+          jsDocLines.push(` *   summary: ${endpoint.summary}`)
+        }
+        if (endpoint.description) {
+          jsDocLines.push(` *   description: ${endpoint.description}`)
+        }
 
+        // Handle parameters if available
         if (endpoint.parameters) {
-          jsDocLines.push(` *     parameters:`)
+          jsDocLines.push(' *   parameters:')
           endpoint.parameters.forEach(param => {
-            jsDocLines.push(` *       - in: ${param.in}`)
-            jsDocLines.push(` *         name: ${param.name}`)
-            jsDocLines.push(` *         required: ${param.required}`)
-            jsDocLines.push(` *         description: ${param.description}`)
+            jsDocLines.push(` *    - in: ${param.in}`)
+            jsDocLines.push(` *      name: ${param.name}`)
+            jsDocLines.push(` *      required: ${param.required}`)
+            if (param.description) {
+              jsDocLines.push(` *      description: ${param.description}`)
+            }
+            // Add schema information if available
             if (param.schema) {
-              jsDocLines.push(` *         schema:`)
-              jsDocLines.push(` *           type: ${param.schema.type}`)
+              jsDocLines.push(` *      schema:`)
+              for (const prop in param.schema) {
+                jsDocLines.push(` *        ${prop}: ${param.schema[prop]}`)
+              }
             }
           })
         }
 
+        // Handle responses if available
         if (endpoint.responses) {
-          jsDocLines.push(` *     responses:`)
-          for (let response in endpoint.responses) {
-            const responseDetail = endpoint.responses[response]
-            jsDocLines.push(` *       ${response}:`)
-            if (responseDetail.description)
-              jsDocLines.push(
-                ` *         description: ${responseDetail.description}`
-              )
-            if (responseDetail.content) {
-              jsDocLines.push(` *         content:`)
-              for (let contentType in responseDetail.content) {
-                const contentDetail = responseDetail.content[contentType]
-                jsDocLines.push(` *           ${contentType}:`)
-                if (contentDetail.schema) {
-                  jsDocLines.push(` *             schema:`)
-                  if (contentDetail.schema.$ref) {
-                    jsDocLines.push(
-                      ` *               $ref: ${contentDetail.schema.$ref}`
-                    )
+          jsDocLines.push(' *   responses:')
+          for (const statusCode in endpoint.responses) {
+            const response = endpoint.responses[statusCode]
+            jsDocLines.push(` *    ${statusCode}:`)
+            if (response.description) {
+              jsDocLines.push(` *      description: ${response.description}`)
+            }
+
+            // Handle content within responses
+            if (response.content) {
+              jsDocLines.push(' *      content:')
+              for (const contentType in response.content) {
+                jsDocLines.push(` *        ${contentType}:`)
+                const content = response.content[contentType]
+                if (content.schema) {
+                  // Handle schema references
+                  if (content.schema.$ref) {
+                    jsDocLines.push(` *          $ref: ${content.schema.$ref}`)
                   } else {
-                    jsDocLines.push(
-                      ` *               type: ${contentDetail.schema.type}`
-                    )
-                    if (contentDetail.schema.items) {
-                      jsDocLines.push(` *               items:`)
+                    // Handle schema properties
+                    jsDocLines.push(` *          schema:`)
+                    for (const schemaProp in content.schema) {
                       jsDocLines.push(
-                        ` *                 type: ${contentDetail.schema.items.type}`
+                        ` *            ${schemaProp}: ${content.schema[schemaProp]}`
                       )
-                      if (contentDetail.schema.items.properties) {
-                        jsDocLines.push(` *                 properties:`)
-                        for (let property in contentDetail.schema.items
-                          .properties) {
-                          jsDocLines.push(` *                   ${property}:`)
-                          jsDocLines.push(
-                            ` *                     type: ${contentDetail.schema.items.properties[property].type}`
-                          )
-                        }
-                      }
                     }
                   }
+                }
+                // Add example if available
+                if (content.example) {
+                  jsDocLines.push(` *          example:`)
+                  jsDocLines.push(
+                    ` *            ${JSON.stringify(content.example, null, 2)}`
+                  )
                 }
               }
             }
           }
         }
-        jsDocLines.push(` */\n`)
+
+        jsDocLines.push(' */')
       }
     }
 
     return jsDocLines.join('\n')
   } catch (error) {
-    console.error(`Error processing Swagger JSON: ${error.message}`)
+    if (error instanceof SyntaxError) {
+      console.error('Error parsing Swagger JSON: Invalid JSON format.')
+    } else {
+      console.error(`Error processing Swagger JSON: ${error.message}`)
+    }
+    throw error // Rethrow the error for the caller to handle.
   }
 }

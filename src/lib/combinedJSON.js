@@ -161,12 +161,13 @@ const writeFileWithSpinner = async (filePath, data) => {
     console.error('Error details:', error)
   }
 }
+const dir = dirname(fileURLToPath(import.meta.url))
 ;(async () => {
   try {
-  if (!process.env.NODE_ENV === 'development') return
-    const dir = dirname(fileURLToPath(import.meta.url))
-    const json = JSON.stringify(await CombinedJSON(), null, 2)
+    if (!process.env.NODE_ENV === 'development') return
 
+    const json = JSON.stringify(await CombinedJSON(), null, 2)
+    // console.log(json)
     await writeFileWithSpinner(join(dir, '../views/pages/swagger.json'), json)
     await writeFileWithSpinner(
       join(dir, '../views/pages/swagger.js'),

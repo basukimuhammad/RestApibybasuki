@@ -5,7 +5,7 @@ import * as sc from '../../scrape/index.js'
 import apiKeyMiddleware from '../../middlewares/apiKeyMiddleware.js'
 
 const apiR = express.Router()
-console.log(sc)
+// console.log(sc)
 apiR.use(apiKeyMiddleware)
 
 apiR.get('/:route', async (req, res) => {

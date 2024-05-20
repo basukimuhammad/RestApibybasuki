@@ -17,7 +17,7 @@ const handleGetRequest = async (req, res) => {
     if (!fs.existsSync(filePath)) {
       return res.status(404).json({
         status: 'Not Found',
-        message: 'File not found',
+        message: 'Path not found',
       })
     }
 
