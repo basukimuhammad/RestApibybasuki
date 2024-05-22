@@ -32,8 +32,6 @@ routerDocs.use('/docs', serve, async (req, res, next) => {
         operationsSorter: 'method',
         tryItOutEnabled: true,
         showCommonExtensions: true,
-        filter: true,
-        deepLinking: true,
         validateResponses: true,
         validateModels: true,
         displayOperationId: true,
@@ -45,7 +43,6 @@ routerDocs.use('/docs', serve, async (req, res, next) => {
         showResponseCodes: true,
         showExternalDocs: true,
       },
-      url: '/docs/',
       customCssUrl: '/assets/css/custom.css',
       customJs: [
       // '/assets/js/custom2.js', // Particle optional 
@@ -53,7 +50,7 @@ routerDocs.use('/docs', serve, async (req, res, next) => {
        ],
       customfavIcon: '/assets/img/favicon.ico',
       customSiteTitle: author,
-      explorer: false,
+      explorer: true,
       deepLinking: true,
     })(req, res, next)
   } catch (error) {
