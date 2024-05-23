@@ -13,10 +13,7 @@ async function fetchImageUrl(tag) {
     )
     return response.data.images[0].url
   } catch (error) {
-    console.error(
-      `Error fetching image URL for tag ${tag}:`,
-      error
-    )
+    console.error(`Error fetching image URL for tag ${tag}:`, error)
     throw new Error('Failed to fetch image URL')
   }
 }
@@ -28,10 +25,7 @@ async function downloadImage(url) {
     })
     return Buffer.from(response.data, 'binary')
   } catch (error) {
-    console.error(
-      'Error downloading image:',
-      error
-    )
+    console.error('Error downloading image:', error)
     throw new Error('Failed to download image')
   }
 }
@@ -50,14 +44,10 @@ apiR.get('/:tag', async (req, res) => {
     })
     response.data.pipe(res)
   } catch (error) {
-    console.error(
-      `Error processing request for tag ${tag}:`,
-      error.message
-    )
+    console.error(`Error processing request for tag ${tag}:`, error.message)
     res.status(500).json({
       error: 'Internal Server Error',
-      message:
-        'An error occurred while processing the request.',
+      message: 'An error occurred while processing the request.',
     })
   }
 })

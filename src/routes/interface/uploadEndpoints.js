@@ -22,8 +22,7 @@ const uploadEndpoints = {
       },
       responses: {
         200: {
-          description:
-            'File successfully uploaded.',
+          description: 'File successfully uploaded.',
           content: {
             'application/json': {
               schema: {

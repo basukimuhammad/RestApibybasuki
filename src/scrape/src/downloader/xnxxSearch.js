@@ -6,12 +6,9 @@ import fetch from 'node-fetch'
 async function xnxxSearch(t) {
   return new Promise((n, e) => {
     const r = 'https://www.xnxx.com'
-    fetch(
-      `${r}/search/${t}/${Math.floor(3 * Math.random()) + 1}`,
-      {
-        method: 'get',
-      }
-    )
+    fetch(`${r}/search/${t}/${Math.floor(3 * Math.random()) + 1}`, {
+      method: 'get',
+    })
       .then(t => t.text())
       .then(t => {
         const e = cheerio.load(t, {
@@ -25,22 +22,14 @@ async function xnxxSearch(t) {
           e(n)
             .find('div.thumb')
             .each(function (t, n) {
-              a.push(
-                r +
-                  e(n)
-                    .find('a')
-                    .attr('href')
-                    .replace('/THUMBNUM/', '/')
-              )
+              a.push(r + e(n).find('a').attr('href').replace('/THUMBNUM/', '/'))
             })
         }),
           e('div.mozaique').each(function (t, n) {
             e(n)
               .find('div.thumb-under')
               .each(function (t, n) {
-                i.push(
-                  e(n).find('p.metadata').text()
-                ),
+                i.push(e(n).find('p.metadata').text()),
                   e(n)
                     .find('a')
                     .each(function (t, n) {

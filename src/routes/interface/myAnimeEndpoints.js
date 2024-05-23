@@ -4,8 +4,7 @@ const swaggerDoc = {
   '/myanimelist/search': {
     get: {
       tags: ['MyAnimeList'],
-      summary:
-        'Search for anime or manga on MyAnimeList',
+      summary: 'Search for anime or manga on MyAnimeList',
       parameters: [
         {
           name: 'name',
@@ -19,8 +18,7 @@ const swaggerDoc = {
         {
           name: 'type',
           in: 'query',
-          description:
-            'The type of search (anime or manga)',
+          description: 'The type of search (anime or manga)',
           required: false,
           schema: {
             type: 'string',
@@ -45,8 +43,7 @@ const swaggerDoc = {
   '/myanimelist/season': {
     get: {
       tags: ['MyAnimeList'],
-      summary:
-        'Get anime data by year, season, and type',
+      summary: 'Get anime data by year, season, and type',
       parameters: [
         {
           name: 'year',
@@ -64,12 +61,7 @@ const swaggerDoc = {
           description: 'The season',
           schema: {
             type: 'string',
-            enum: [
-              'spring',
-              'summer',
-              'fall',
-              'winter',
-            ],
+            enum: ['spring', 'summer', 'fall', 'winter'],
           },
         },
         {
@@ -122,8 +114,7 @@ const swaggerDoc = {
         {
           name: 'after',
           in: 'query',
-          description:
-            'Start index for pagination',
+          description: 'Start index for pagination',
           required: false,
           schema: {
             type: 'integer',
@@ -133,8 +124,7 @@ const swaggerDoc = {
         {
           name: 'type',
           in: 'query',
-          description:
-            'Type of media (anime or manga)',
+          description: 'Type of media (anime or manga)',
           required: false,
           schema: {
             type: 'string',
@@ -144,8 +134,7 @@ const swaggerDoc = {
         {
           name: 'status',
           in: 'query',
-          description:
-            "Status in the user's watchlist",
+          description: "Status in the user's watchlist",
           required: false,
           schema: {
             type: 'integer',
@@ -175,8 +164,7 @@ const swaggerDoc = {
         {
           name: 'nbNews',
           in: 'query',
-          description:
-            'Number of news articles to retrieve',
+          description: 'Number of news articles to retrieve',
           required: false,
           schema: {
             type: 'integer',
@@ -201,14 +189,12 @@ const swaggerDoc = {
   '/myanimelist/info-anime': {
     get: {
       tags: ['MyAnimeList'],
-      summary:
-        'Mendapatkan informasi anime berdasarkan nama',
+      summary: 'Mendapatkan informasi anime berdasarkan nama',
       parameters: [
         {
           name: 'name',
           in: 'query',
-          description:
-            'Nama anime yang ingin dicari',
+          description: 'Nama anime yang ingin dicari',
           required: true,
           schema: {
             type: 'string',
@@ -228,8 +214,7 @@ const swaggerDoc = {
         {
           name: 'type',
           in: 'query',
-          description:
-            'Tipe, bisa berupa anime atau manga',
+          description: 'Tipe, bisa berupa anime atau manga',
           required: true,
           schema: {
             type: 'string',
@@ -264,8 +249,7 @@ const swaggerDoc = {
             type: 'string',
             format: 'url',
           },
-          description:
-            'URL of the anime on MyAnimeList.net',
+          description: 'URL of the anime on MyAnimeList.net',
         },
       ],
       responses: {
@@ -285,8 +269,7 @@ const swaggerDoc = {
   '/myanimelist/episodes': {
     get: {
       tags: ['MyAnimeList'],
-      summary:
-        'Get episodes list by anime name and/or id',
+      summary: 'Get episodes list by anime name and/or id',
       parameters: [
         {
           in: 'query',
@@ -303,8 +286,7 @@ const swaggerDoc = {
           required: false,
           schema: {
             type: 'number',
-            description:
-              'The unique identifier of the anime',
+            description: 'The unique identifier of the anime',
           },
         },
       ],
@@ -339,8 +321,7 @@ const swaggerDoc = {
         {
           in: 'query',
           name: 'id',
-          description:
-            'The unique identifier of the anime',
+          description: 'The unique identifier of the anime',
           schema: {
             type: 'number',
           },
@@ -348,8 +329,7 @@ const swaggerDoc = {
         {
           in: 'query',
           name: 'limit',
-          description:
-            'The maximum number of reviews to fetch',
+          description: 'The maximum number of reviews to fetch',
           schema: {
             type: 'number',
           },
@@ -357,8 +337,7 @@ const swaggerDoc = {
         {
           in: 'query',
           name: 'skip',
-          description:
-            'The number of reviews to skip',
+          description: 'The number of reviews to skip',
           schema: {
             type: 'number',
           },
@@ -396,8 +375,7 @@ const swaggerDoc = {
           in: 'query',
           name: 'id',
           required: false,
-          description:
-            'The unique identifier of the anime',
+          description: 'The unique identifier of the anime',
           schema: {
             type: 'integer',
           },
@@ -435,8 +413,7 @@ const swaggerDoc = {
           in: 'query',
           name: 'id',
           required: false,
-          description:
-            'The unique identifier of the anime',
+          description: 'The unique identifier of the anime',
           schema: {
             type: 'integer',
           },
@@ -474,8 +451,7 @@ const swaggerDoc = {
           in: 'query',
           name: 'id',
           required: false,
-          description:
-            'The unique identifier of the anime',
+          description: 'The unique identifier of the anime',
           schema: {
             type: 'integer',
           },

@@ -2,10 +2,7 @@
 
 import fetchRequest from './fetch/request.js'
 import parseBoards from './parser/parseBoards.js'
-export default async function searchBoards(
-  query,
-  bookmark
-) {
+export default async function searchBoards(query, bookmark) {
   if (!query) {
     throw new Error('No query specified')
   }

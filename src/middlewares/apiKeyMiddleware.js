@@ -2,11 +2,7 @@
 
 import User from '../models/user.js'
 
-const apiKeyMiddleware = async (
-  req,
-  res,
-  next
-) => {
+const apiKeyMiddleware = async (req, res, next) => {
   const apiKey = req.query.apikey
 
   if (!apiKey) {
@@ -27,10 +23,7 @@ const apiKeyMiddleware = async (
   }
 
   // Check user status
-  if (
-    user.status === 'premium' &&
-    user.limit <= 0
-  ) {
+  if (user.status === 'premium' && user.limit <= 0) {
     return res.status(403).json({
       error: 'Premium user limit exceeded.',
     })

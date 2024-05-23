@@ -15,7 +15,8 @@
 
 ---
 
-<h1 align="center">example</h1>
+# preview
+
 <p align="center">
   <img src="https://telegra.ph/file/af0922d8cb7b8e08b9469.jpg" alt="example" style="border: 5px solid #000; padding: 2px; margin: 5px;">
 </p>
@@ -24,6 +25,24 @@
 
 NoxVenenum is an experimental project for learning purposes. It's a REST API built using JavaScript, documented with Swagger OpenAPI V3.0, and designed to run on port 3000.
 
+## Directory Structure:
+
+```
+├── src
+│   ├── lib: Reusable utility functions used throughout the project.
+│   ├── middlewares: Middleware functions for API authentication (e.g., API key validation).
+│   ├── models: Data schemas for MongoDB.
+│   ├── routes: Defines path and interface swagger-ui.
+│       ├── api: Contains API endpoint routes.
+│       └── interface: Swagger UI documentation for API endpoints.
+│   └── scrape: Scraping modules for different sources.
+│       ├── data: Storage for scraped data.
+│       └── src: Source code for various scrapers (AI, anime, etc.).
+└── views:
+    ├── error: Error page templates.
+    └── pages: Main application page templates.
+        └── assets: Static assets (CSS, JavaScript, images) for the web pages.
+```
 ## path
 
 **Ai:**

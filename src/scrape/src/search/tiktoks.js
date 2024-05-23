@@ -9,8 +9,7 @@ export default async function tiktoks(query) {
         method: 'POST',
         url: 'https://tikwm.com/api/feed/search',
         headers: {
-          'Content-Type':
-            'application/x-www-form-urlencoded charset=UTF-8',
+          'Content-Type': 'application/x-www-form-urlencoded charset=UTF-8',
           Cookie: 'current_language=en',
           'User-Agent':
             'Mozilla/5.0 (Linux Android 10 K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36',
@@ -26,9 +25,7 @@ export default async function tiktoks(query) {
       if (videos.length === 0) {
         reject('Tidak ada video ditemukan.')
       } else {
-        const dann = Math.floor(
-          Math.random() * videos.length
-        )
+        const dann = Math.floor(Math.random() * videos.length)
         const videorndm = videos[dann]
 
         const result = {

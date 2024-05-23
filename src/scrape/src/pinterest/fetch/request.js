@@ -1,10 +1,7 @@
 /** @format */
 
 import axios from 'axios'
-export default async function fetchRequest(
-  url,
-  body
-) {
+export default async function fetchRequest(url, body) {
   try {
     const response = await axios.get(url, body)
     return response.data

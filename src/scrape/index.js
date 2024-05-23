@@ -45,10 +45,7 @@ export { default as apkmD } from './src/downloader/apkmd.js'
 export { default as terabox } from './src/downloader/terabox.js'
 export { default as ttSlide } from './src/downloader/ttslide.js'
 export { default as igStory } from './src/downloader/igStory.js'
-export {
-  scrapeAppUrl,
-  scrapeGameData,
-} from './src/downloader/dva.js'
+export { scrapeAppUrl, scrapeGameData } from './src/downloader/dva.js'
 
 /**
  * KOMIK
@@ -88,10 +85,7 @@ export { default as xvideoS } from './src/search/xvideosS.js'
  * TOOLS
  */
 
-export {
-  translate,
-  langList,
-} from './src/tools/translate.js'
+export { translate, langList } from './src/tools/translate.js'
 export { default as cekGambar } from './src/tools/antiPorn.js'
 export { default as sinonim } from './src/tools/sinonim.js'
 export { default as gstalk } from './src/tools/gitstalk.js'

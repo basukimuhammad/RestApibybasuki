@@ -33,24 +33,17 @@ const features = {
 
 const millsToMinutesAndSeconds = millis => {
   const minutes = Math.floor(millis / 60000)
-  const seconds = (
-    (millis % 60000) /
-    1000
-  ).toFixed(0)
+  const seconds = ((millis % 60000) / 1000).toFixed(0)
   return `${minutes}:${Number(seconds) < 10 ? '0' : ''}${seconds}`
 }
 
 const getGuestTokenAuthorization = async () => {
-  const { data } = await axios.get(
-    'https://pastebin.com/raw/nz3ApKQM'
-  )
+  const { data } = await axios.get('https://pastebin.com/raw/nz3ApKQM')
   return data
 }
 
 const getTwitterAuthorization = async () => {
-  const { data } = await axios.get(
-    'https://pastebin.com/raw/Bu7XFnpE'
-  )
+  const { data } = await axios.get('https://pastebin.com/raw/Bu7XFnpE')
   return data
 }
 
@@ -61,8 +54,7 @@ const getGuestToken = async () => {
       {
         method: 'POST',
         headers: {
-          Authorization:
-            await getGuestTokenAuthorization(),
+          Authorization: await getGuestTokenAuthorization(),
           ...header(),
         },
       }
@@ -76,12 +68,8 @@ const getGuestToken = async () => {
 function twitterdl(Url, config) {
   return new Promise(async (resolve, reject) => {
     try {
-      const isUrl = str =>
-        /^https?:\/\//.test(str)
-      if (
-        !isUrl(Url) ||
-        !/x\.com|twitter\.com/i.test(Url)
-      )
+      const isUrl = str => /^https?:\/\//.test(str)
+      if (!isUrl(Url) || !/x\.com|twitter\.com/i.test(Url))
         throw new Error('Invalid URL: ' + Url)
       const id = Url.match(/\/([\d]+)/)
       if (!id)
@@ -91,9 +79,7 @@ function twitterdl(Url, config) {
         })
       const guest_token = await getGuestToken()
       const csrf_token = config?.cookie
-        ? config.cookie.match(
-            /(?:^|; )ct0=([^;]*)/
-          )
+        ? config.cookie.match(/(?:^|; )ct0=([^;]*)/)
         : ''
 
       if (!guest_token)
@@ -122,12 +108,8 @@ function twitterdl(Url, config) {
               Authorization: config?.authorization
                 ? config.authorization
                 : await getTwitterAuthorization(),
-              Cookie: config?.cookie
-                ? config.cookie
-                : '',
-              'x-csrf-token': csrf_token
-                ? csrf_token[1]
-                : '',
+              Cookie: config?.cookie ? config.cookie : '',
+              'x-csrf-token': csrf_token ? csrf_token[1] : '',
               'x-guest-token': guest_token,
               ...header(),
             },
@@ -140,10 +122,7 @@ function twitterdl(Url, config) {
               msg: 'Tweet not found!',
             })
           }
-          if (
-            data.data.tweetResult.result
-              ?.reason === 'NsfwLoggedOut'
-          ) {
+          if (data.data.tweetResult.result?.reason === 'NsfwLoggedOut') {
             /** Use Cookies to avoid errors */
             return resolve({
               status: 404,
@@ -151,112 +130,78 @@ function twitterdl(Url, config) {
             })
           }
           const result =
-            data.data.tweetResult.result
-              .__typename ===
+            data.data.tweetResult.result.__typename ===
             'TweetWithVisibilityResults'
               ? data.data.tweetResult.result.tweet
               : data.data.tweetResult.result
           const statistics = {
-            replieCount:
-              result.legacy.reply_count,
-            retweetCount:
-              result.legacy.retweet_count,
-            favoriteCount:
-              result.legacy.favorite_count,
+            replieCount: result.legacy.reply_count,
+            retweetCount: result.legacy.retweet_count,
+            favoriteCount: result.legacy.favorite_count,
             viewCount: Number(result.views.count),
           }
-          const user =
-            result.core.user_results.result
+          const user = result.core.user_results.result
           const author = {
             username: user.legacy.screen_name,
             bio: user.legacy.description,
-            possiblySensitive:
-              user.legacy.possibly_sensitive,
+            possiblySensitive: user.legacy.possibly_sensitive,
             verified: user.legacy.verified,
             location: user.legacy.location,
-            profileBannerUrl:
-              user.legacy.profile_banner_url,
-            profileImageUrl:
-              user.legacy.profile_image_url_https,
-            url:
-              'https://twitter.com/' +
-              user.legacy.screen_name,
+            profileBannerUrl: user.legacy.profile_banner_url,
+            profileImageUrl: user.legacy.profile_image_url_https,
+            url: 'https://twitter.com/' + user.legacy.screen_name,
             statistics: {
-              favoriteCount:
-                user.legacy.favourites_count,
-              followersCount:
-                user.legacy.followers_count,
-              friendsCount:
-                user.legacy.friends_count,
-              statusesCount:
-                user.legacy.statuses_count,
-              listedCount:
-                user.legacy.listed_count,
+              favoriteCount: user.legacy.favourites_count,
+              followersCount: user.legacy.followers_count,
+              friendsCount: user.legacy.friends_count,
+              statusesCount: user.legacy.statuses_count,
+              listedCount: user.legacy.listed_count,
               mediaCount: user.legacy.media_count,
             },
           }
           const media =
-            result.legacy?.entities?.media?.map(
-              v => {
-                if (v.type === 'photo') {
-                  return {
-                    type: v.type,
-                    image: v.media_url_https,
-                    expandedUrl: v.expanded_url,
-                  }
-                } else {
-                  const isGif =
-                    v.type === 'animated_gif'
-                  const videos =
-                    v.video_info.variants
-                      .filter(
-                        video =>
-                          video.content_type ===
-                          'video/mp4'
-                      )
-                      .map(variants => {
-                        let quality = isGif
-                          ? `${v.original_info.width}x${v.original_info.height}`
-                          : variants.url.match(
-                              /\/([\d]+x[\d]+)\//
-                            )[1]
-                        return {
-                          bitrate:
-                            variants.bitrate,
-                          content_type:
-                            variants.content_type,
-                          quality,
-                          url: variants.url,
-                        }
-                      })
-                  return {
-                    type: v.type,
-                    cover: v.media_url_https,
-                    duration:
-                      millsToMinutesAndSeconds(
-                        v.video_info
-                          .duration_millis
-                      ),
-                    expandedUrl: v.expanded_url,
-                    videos,
-                  }
+            result.legacy?.entities?.media?.map(v => {
+              if (v.type === 'photo') {
+                return {
+                  type: v.type,
+                  image: v.media_url_https,
+                  expandedUrl: v.expanded_url,
+                }
+              } else {
+                const isGif = v.type === 'animated_gif'
+                const videos = v.video_info.variants
+                  .filter(video => video.content_type === 'video/mp4')
+                  .map(variants => {
+                    let quality = isGif
+                      ? `${v.original_info.width}x${v.original_info.height}`
+                      : variants.url.match(/\/([\d]+x[\d]+)\//)[1]
+                    return {
+                      bitrate: variants.bitrate,
+                      content_type: variants.content_type,
+                      quality,
+                      url: variants.url,
+                    }
+                  })
+                return {
+                  type: v.type,
+                  cover: v.media_url_https,
+                  duration: millsToMinutesAndSeconds(
+                    v.video_info.duration_millis
+                  ),
+                  expandedUrl: v.expanded_url,
+                  videos,
                 }
               }
-            ) || []
+            }) || []
           resolve({
             id: result.legacy.id_str,
             createdAt: result.legacy.created_at,
             description: result.legacy.full_text,
             languange: result.legacy.lang,
-            possiblySensitive:
-              result.legacy.possibly_sensitive ||
-              false,
+            possiblySensitive: result.legacy.possibly_sensitive || false,
             possiblySensitiveEditable:
-              result.legacy
-                .possibly_sensitive_editable ||
-              false,
-            isQuoteStatus:
-              result.legacy.is_quote_status,
+              result.legacy.possibly_sensitive_editable || false,
+            isQuoteStatus: result.legacy.is_quote_status,
             mediaCount: media.length,
             author,
             statistics,

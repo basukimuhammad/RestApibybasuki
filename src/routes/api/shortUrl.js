@@ -20,45 +20,40 @@ const shorteners = {
   shrt: shorter,
 }
 
-apiR.get(
-  '/:shortener',
-  apiKeyMiddleware,
-  async (req, res) => {
-    try {
-      const { url } = req.query
+apiR.get('/:shortener', apiKeyMiddleware, async (req, res) => {
+  try {
+    const { url } = req.query
 
-      if (!url) {
-        return res.status(400).json({
-          error: 'URL is required.',
-        })
-      }
-
-      const shortener =
-        shorteners[req.params.shortener]
-
-      if (!shortener) {
-        return res.status(400).json({
-          error: 'Invalid shortener specified.',
-        })
-      }
-
-      const data = await shortener(url)
-
-      if (!data) {
-        return res.status(400).json({
-          error: 'Invalid response.',
-        })
-      }
-      res.json({
-        status: 'Success',
-        code: 200,
-        author,
-        data,
+    if (!url) {
+      return res.status(400).json({
+        error: 'URL is required.',
       })
-    } catch (error) {
-      console.error(error)
     }
+
+    const shortener = shorteners[req.params.shortener]
+
+    if (!shortener) {
+      return res.status(400).json({
+        error: 'Invalid shortener specified.',
+      })
+    }
+
+    const data = await shortener(url)
+
+    if (!data) {
+      return res.status(400).json({
+        error: 'Invalid response.',
+      })
+    }
+    res.json({
+      status: 'Success',
+      code: 200,
+      author,
+      data,
+    })
+  } catch (error) {
+    console.error(error)
   }
-)
+})
 
 export default apiR

@@ -9,18 +9,12 @@ export default async function igStory(url) {
     )
     const data = response.data
     let imagesArray = data.result.map(v =>
-      v.image_versions2.candidates.map(
-        candidate => candidate.url
-      )
+      v.image_versions2.candidates.map(candidate => candidate.url)
     )
     let imagesObject = {}
     let counter = 1
     for (let i = 0; i < imagesArray.length; i++) {
-      for (
-        let j = 0;
-        j < imagesArray[i].length;
-        j++
-      ) {
+      for (let j = 0; j < imagesArray[i].length; j++) {
         imagesObject[counter] = imagesArray[i][j]
         counter++
       }

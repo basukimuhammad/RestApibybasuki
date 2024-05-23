@@ -8,9 +8,7 @@ export async function mediafire(url) {
     const res = await axios.get(url)
     const $ = cheerio.load(res.data)
 
-    const urlFile = $('a#downloadButton').attr(
-      'href'
-    )
+    const urlFile = $('a#downloadButton').attr('href')
     const sizeFile = $('a#downloadButton')
       .text()
       .replace('Download', '')

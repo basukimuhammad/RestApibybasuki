@@ -9,10 +9,7 @@ export default async function coomer(username) {
   let result
   try {
     if (fs.existsSync(outputPath)) {
-      const lah = fs.readFileSync(
-        outputPath,
-        'utf-8'
-      )
+      const lah = fs.readFileSync(outputPath, 'utf-8')
       return (result = JSON.parse(lah))
     }
     const allAttachments = []
@@ -25,38 +22,27 @@ export default async function coomer(username) {
       const data = response.data
 
       const nonEmptyData = data.filter(
-        item =>
-          item.attachments &&
-          item.attachments.length > 0
+        item => item.attachments && item.attachments.length > 0
       )
 
       if (nonEmptyData.length > 0) {
-        const attachments = nonEmptyData.flatMap(
-          item =>
-            item.attachments.map(
-              attachment =>
-                'https://coomer.su/' +
-                attachment.path
-            )
+        const attachments = nonEmptyData.flatMap(item =>
+          item.attachments.map(
+            attachment => 'https://coomer.su/' + attachment.path
+          )
         )
 
         allAttachments.push(...attachments)
         maxO += 50
       } else {
-        console.log(
-          `Tidak ada data valid untuk o=${maxO}`
-        )
+        console.log(`Tidak ada data valid untuk o=${maxO}`)
         break
       }
     }
 
     result = allAttachments
 
-    fs.writeFileSync(
-      outputPath,
-      JSON.stringify(result, null, 2),
-      'utf-8'
-    )
+    fs.writeFileSync(outputPath, JSON.stringify(result, null, 2), 'utf-8')
 
     console.log(
       `Hasil berhasil disimpan di ${outputPath} total ${result.length}`
@@ -64,10 +50,7 @@ export default async function coomer(username) {
 
     return result
   } catch (error) {
-    console.error(
-      'Gagal mengambil data coomer:',
-      error.message
-    )
+    console.error('Gagal mengambil data coomer:', error.message)
     throw error
   }
 }

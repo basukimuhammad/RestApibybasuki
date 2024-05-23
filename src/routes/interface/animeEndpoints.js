@@ -1,9 +1,6 @@
 /** @format */
 
-const createAnimeEndpoint = (
-  parameters,
-  description
-) => {
+const createAnimeEndpoint = (parameters, description) => {
   return {
     get: {
       tags: ['Anime'],
@@ -83,10 +80,7 @@ const animeEndpoints = {
     ],
     'Successful response'
   ),
-  '/anime/hentai': createAnimeEndpoint(
-    [],
-    'Successfully response.'
-  ),
+  '/anime/hentai': createAnimeEndpoint([], 'Successfully response.'),
   '/anime/whatanime': createAnimeEndpoint(
     [
       {
@@ -96,8 +90,7 @@ const animeEndpoints = {
         schema: {
           type: 'string',
         },
-        description:
-          'URL of the image or video frame',
+        description: 'URL of the image or video frame',
       },
     ],
     'Successful response'
@@ -111,8 +104,7 @@ const animeEndpoints = {
         schema: {
           type: 'string',
         },
-        description:
-          'q of the image or video frame',
+        description: 'q of the image or video frame',
       },
     ],
     'Successful response'

@@ -3,10 +3,7 @@
 import { Api } from './api/api.js'
 import request from './fetch/request.js'
 import parseSuggestions from './parser/parseSuggestions.js'
-export default async function suggestions(
-  id,
-  bookmark
-) {
+export default async function suggestions(id, bookmark) {
   if (!id) throw Error('No id specified')
 
   const params = {

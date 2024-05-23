@@ -52,9 +52,7 @@ const generateEndpoint = endpoint => ({
 
 const downloaderEndpointsObject = Object.assign(
   {},
-  ...downloaderEndpoints.map(endpoint =>
-    generateEndpoint(endpoint)
-  )
+  ...downloaderEndpoints.map(endpoint => generateEndpoint(endpoint))
 )
 
 export default downloaderEndpointsObject

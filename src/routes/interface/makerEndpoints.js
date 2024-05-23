@@ -26,12 +26,10 @@ endpoints.forEach(endpoint => {
       ],
       responses: {
         200: {
-          description:
-            'Berhasil mengambil informasi.',
+          description: 'Berhasil mengambil informasi.',
           content: {
             'image/*': {
-              example:
-                'https://example.com/image.jpg',
+              example: 'https://example.com/image.jpg',
             },
           },
         },

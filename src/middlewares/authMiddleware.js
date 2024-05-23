@@ -1,17 +1,12 @@
 /** @format */
 
 import jwt from 'jsonwebtoken'
-const authenticateToken = async (
-  req,
-  res,
-  next
-) => {
+const authenticateToken = async (req, res, next) => {
   const token = req.cookies.Authorization
 
   if (!token) {
     return res.status(401).json({
-      error:
-        'Unauthorized: Missing access token.',
+      error: 'Unauthorized: Missing access token.',
     })
   }
 

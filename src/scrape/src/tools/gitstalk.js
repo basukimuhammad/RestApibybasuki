@@ -4,9 +4,7 @@ import axios from 'axios'
 
 const fetchGitHubUserInfo = async username => {
   try {
-    const response = await axios.get(
-      `https://api.github.com/users/${username}`
-    )
+    const response = await axios.get(`https://api.github.com/users/${username}`)
     const userData = response.data
 
     const {

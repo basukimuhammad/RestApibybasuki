@@ -4,8 +4,7 @@ const swaggerUI = {
   '/search/xvideos': {
     get: {
       tags: ['Search'],
-      summary:
-        'Get videos from XVideos based on criteria',
+      summary: 'Get videos from XVideos based on criteria',
       parameters: [
         {
           name: 'query',

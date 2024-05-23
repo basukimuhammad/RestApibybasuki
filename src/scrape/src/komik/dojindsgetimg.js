@@ -10,11 +10,9 @@ async function dojindsgetimg(url) {
       .then(({ data }) => {
         const $ = cheerio.load(data)
         const hasil = []
-        $('#anu > img').each(
-          async function (a, b) {
-            hasil.push($(b).attr('src'))
-          }
-        )
+        $('#anu > img').each(async function (a, b) {
+          hasil.push($(b).attr('src'))
+        })
         resolve(hasil)
       })
       .catch(reject)

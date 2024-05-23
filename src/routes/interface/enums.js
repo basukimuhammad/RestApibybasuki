@@ -82,12 +82,7 @@ const swaggerOptions = {
           required: true,
           schema: {
             type: 'string',
-            enum: [
-              'waifu',
-              'neko',
-              'trap',
-              'blowjob',
-            ],
+            enum: ['waifu', 'neko', 'trap', 'blowjob'],
           },
         },
       ],

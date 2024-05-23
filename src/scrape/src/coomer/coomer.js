@@ -4,9 +4,7 @@ import axios from 'axios'
 import cheerio from 'cheerio'
 
 const pickRandom = array => {
-  const randomIndex = Math.floor(
-    Math.random() * array.length
-  )
+  const randomIndex = Math.floor(Math.random() * array.length)
   return array[randomIndex]
 }
 
@@ -28,44 +26,23 @@ const scrapeCoomerData = async baseUrl => {
   }
 
   const getPageLinks = async () => {
-    const response = await axios.get(
-      baseUrl,
-      getConfigWithRandomUserAgent()
-    )
+    const response = await axios.get(baseUrl, getConfigWithRandomUserAgent())
     const $ = cheerio.load(response.data)
-    const basePageLink = baseUrl.replace(
-      'https://coomer.su',
-      ''
-    )
-    const extractedPageLinks = $(
-      'menu a[href*="?o="]'
-    )
+    const basePageLink = baseUrl.replace('https://coomer.su', '')
+    const extractedPageLinks = $('menu a[href*="?o="]')
       .map((_, elem) => $(elem).attr('href'))
       .get()
-    const uniquePageLinks = [
-      ...new Set(extractedPageLinks),
-    ]
-    const allPageLinks = [
-      basePageLink,
-      ...uniquePageLinks,
-    ]
+    const uniquePageLinks = [...new Set(extractedPageLinks)]
+    const allPageLinks = [basePageLink, ...uniquePageLinks]
     return allPageLinks
   }
 
-  const getPostUrls = async (
-    pageLink,
-    count = 1
-  ) => {
+  const getPostUrls = async (pageLink, count = 1) => {
     const pageUrl = `https://coomer.su${pageLink}`
-    const response = await axios.get(
-      pageUrl,
-      getConfigWithRandomUserAgent()
-    )
+    const response = await axios.get(pageUrl, getConfigWithRandomUserAgent())
     const $ = cheerio.load(response.data)
 
-    const extractedPostUrls = $(
-      'a[href^="/onlyfans/user/"]'
-    )
+    const extractedPostUrls = $('a[href^="/onlyfans/user/"]')
       .map((_, elem) => $(elem).attr('href'))
       .get()
 
@@ -78,9 +55,7 @@ const scrapeCoomerData = async baseUrl => {
       getConfigWithRandomUserAgent()
     )
     const post$ = cheerio.load(postResponse.data)
-    const imageUrls = post$(
-      '.post__files .fileThumb'
-    )
+    const imageUrls = post$('.post__files .fileThumb')
       .map((_, elem) => post$(elem).attr('href'))
       .get()
     return imageUrls
@@ -91,11 +66,8 @@ const scrapeCoomerData = async baseUrl => {
 
   while (imageUrls.length === 0 && retries > 0) {
     const allPageLinks = await getPageLinks()
-    const randomPageLink =
-      pickRandom(allPageLinks)
-    const postUrls = await getPostUrls(
-      randomPageLink
-    )
+    const randomPageLink = pickRandom(allPageLinks)
+    const postUrls = await getPostUrls(randomPageLink)
     const randomPostUrl = pickRandom(postUrls)
     imageUrls = await getImageUrls(randomPostUrl)
     retries--

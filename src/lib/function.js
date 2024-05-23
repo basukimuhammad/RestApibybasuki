@@ -2,8 +2,7 @@
 
 import axios from 'axios'
 import crypto from 'crypto'
-const pool =
-  'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ23456789'
+const pool = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ23456789'
 
 const fetchJson = async (url, options) => {
   try {
@@ -45,34 +44,20 @@ const getBuffer = async (url, options) => {
 const randomText = len => {
   const result = []
   for (let i = 0; i < len; i++) {
-    result.push(
-      pool[
-        Math.floor(Math.random() * pool.length)
-      ]
-    )
+    result.push(pool[Math.floor(Math.random() * pool.length)])
   }
   return result.join('')
 }
 
 const getHashedPassword = password => {
   const sha256 = crypto.createHash('sha256')
-  const hash = sha256
-    .update(password)
-    .digest('base64')
+  const hash = sha256.update(password).digest('base64')
   return hash
 }
 
 const pickRandom = array => {
-  const randomIndex = Math.floor(
-    Math.random() * array.length
-  )
+  const randomIndex = Math.floor(Math.random() * array.length)
   return array[randomIndex]
 }
 
-export {
-  randomText,
-  getHashedPassword,
-  fetchJson,
-  getBuffer,
-  pickRandom,
-}
+export { randomText, getHashedPassword, fetchJson, getBuffer, pickRandom }

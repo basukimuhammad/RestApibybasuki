@@ -4,8 +4,7 @@ import axios from 'axios'
 
 function ssweb(url, device = 'desktop') {
   return new Promise((resolve, reject) => {
-    const baseURL =
-      'https://www.screenshotmachine.com'
+    const baseURL = 'https://www.screenshotmachine.com'
     const param = {
       url: url,
       device: device,
@@ -14,12 +13,9 @@ function ssweb(url, device = 'desktop') {
     axios({
       url: baseURL + '/capture.php',
       method: 'POST',
-      data: new URLSearchParams(
-        Object.entries(param)
-      ),
+      data: new URLSearchParams(Object.entries(param)),
       headers: {
-        'content-type':
-          'application/x-www-form-urlencoded charset=UTF-8',
+        'content-type': 'application/x-www-form-urlencoded charset=UTF-8',
       },
     })
       .then(data => {

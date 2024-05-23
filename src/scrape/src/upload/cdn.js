@@ -3,11 +3,7 @@
 import FormData from 'form-data'
 import axios from 'axios'
 
-export default async function upload(
-  buffer,
-  filename,
-  ip = ''
-) {
+export default async function upload(buffer, filename, ip = '') {
   const webhooks = [
     'https://discord.com/api/webhooks/1181319798509023393/fcDNs_y9sh-4jjZOmADynMbp09nisKLOngx8M0wTTg5vGjl8wLtIKlvhc0V--PEwdXv-',
   ]
@@ -21,13 +17,9 @@ export default async function upload(
       throw new Error('Daftar webhook kosong.')
     }
 
-    const randomIndex = Math.floor(
-      Math.random() * webhooks.length
-    )
+    const randomIndex = Math.floor(Math.random() * webhooks.length)
     const webhook = webhooks[randomIndex]
-    const W = webhook.match(
-      /discord.com\/api\/webhooks\/([^\/]+)\/([^\/]+)/
-    )
+    const W = webhook.match(/discord.com\/api\/webhooks\/([^\/]+)\/([^\/]+)/)
     return `https://discordapp.com/api/webhooks/${W[1]}/${W[2]}`
   }
 
@@ -36,10 +28,7 @@ export default async function upload(
     const urls = []
     LC += buffer.length
     for (const chunk of chunks) {
-      const url = await uploadChunk(
-        chunk,
-        filename
-      )
+      const url = await uploadChunk(chunk, filename)
       urls.push(url)
     }
     return urls
@@ -71,19 +60,12 @@ export default async function upload(
         })
         .catch(async err => {
           // Auto retry if the request is rate limited recursively
-          await wait(
-            +err.response.headers[
-              'x-ratelimit-reset-after'
-            ]
-          )
+          await wait(+err.response.headers['x-ratelimit-reset-after'])
           return {
             data: {
               attachments: [
                 {
-                  url: await uploadChunk(
-                    chunk,
-                    filename
-                  ),
+                  url: await uploadChunk(chunk, filename),
                 },
               ],
             },
@@ -92,9 +74,7 @@ export default async function upload(
         .finally(() => uploadingCount--)
     ).data
     if (!result?.attachments?.[0]?.url) {
-      throw new Error(
-        'Cannot find attachments when uploading'
-      )
+      throw new Error('Cannot find attachments when uploading')
     }
     return result.attachments[0].url
   }
@@ -103,40 +83,22 @@ export default async function upload(
     const chunks = []
     let offset = 0
     while (offset < buffer.length) {
-      const chunkSize = Math.min(
-        size,
-        buffer.length - offset
-      )
-      chunks.push(
-        buffer.slice(offset, offset + chunkSize)
-      )
+      const chunkSize = Math.min(size, buffer.length - offset)
+      chunks.push(buffer.slice(offset, offset + chunkSize))
       offset += chunkSize
     }
     return chunks
   }
 
   async function wait(ms) {
-    return new Promise(resolve =>
-      setTimeout(resolve, ms)
-    )
+    return new Promise(resolve => setTimeout(resolve, ms))
   }
 
   function metricNumbers(value) {
-    const types = [
-      '',
-      'KB',
-      'MB',
-      'GB',
-      'TB',
-      'PB',
-      'EB',
-      'ZB',
-      'YB',
-    ]
+    const types = ['', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
     const selectType = (Math.log10(value) / 3) | 0
     if (selectType == 0) return value
-    let scaled =
-      value / Math.pow(10, selectType * 3)
+    let scaled = value / Math.pow(10, selectType * 3)
     return scaled.toFixed(1) + types[selectType]
   }
 

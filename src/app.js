@@ -31,22 +31,12 @@ app.set('trust proxy', 1)
 app.set('json spaces', 2)
 
 app.use(routerDocs)
-app.use(
-  '/',
-  helloRouter,
-  verifyRoutes,
-  apiR,
-  authRoutes
-)
+app.use('/', helloRouter, verifyRoutes, apiR, authRoutes)
 app.use(R404)
 
 app.use((err, req, res, next) => {
   console.error(chalk.red(err.stack))
-  res
-    .status(500)
-    .sendFile(
-      path.join(__dirname, 'views', '500.html')
-    ) // Use path to resolve file
+  res.status(500).sendFile(path.join(__dirname, 'views', '500.html')) // Use path to resolve file
 })
 
 export default app

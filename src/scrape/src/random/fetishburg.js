@@ -15,21 +15,12 @@ const getRandomVideoUrl = async title => {
     const $ = cheerio.load(html)
 
     const items = $('.box .list-videos .item')
-    const randomIndex = Math.floor(
-      Math.random() * items.length
-    )
+    const randomIndex = Math.floor(Math.random() * items.length)
     const randomItem = items.eq(randomIndex)
-    const titles = randomItem
-      .find('.title')
-      .text()
-      .replace(/\t|\n/g, '')
+    const titles = randomItem.find('.title').text().replace(/\t|\n/g, '')
     const href = randomItem.find('a').attr('href')
-    const thumb = randomItem
-      .find('img')
-      .attr('src')
-    const duration = randomItem
-      .find('.duration')
-      .text()
+    const thumb = randomItem.find('img').attr('src')
+    const duration = randomItem.find('.duration').text()
 
     if (!href) {
       throw new Error('No video link found.')

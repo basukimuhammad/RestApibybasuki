@@ -19,68 +19,44 @@ export default function BukaLapak(search) {
       const dat = []
       const b = $('a.slide > img').attr('src')
       $('div.bl-flex-item.mb-8').each((i, u) => {
-        const a = $(u).find(
-          'observer-tracker > div > div'
-        )
-        const img = $(a)
-          .find('div > a > img')
-          .attr('src')
+        const a = $(u).find('observer-tracker > div > div')
+        const img = $(a).find('div > a > img').attr('src')
         if (typeof img === 'undefined') return
 
-        const link = $(a)
-          .find('.bl-thumbnail--slider > div > a')
-          .attr('href')
+        const link = $(a).find('.bl-thumbnail--slider > div > a').attr('href')
         const title = $(a)
-          .find(
-            '.bl-product-card__description-name > p > a'
-          )
+          .find('.bl-product-card__description-name > p > a')
           .text()
           .trim()
         const harga = $(a)
-          .find(
-            'div.bl-product-card__description-price > p'
-          )
+          .find('div.bl-product-card__description-price > p')
           .text()
           .trim()
         const rating = $(a)
-          .find(
-            'div.bl-product-card__description-rating > p'
-          )
+          .find('div.bl-product-card__description-rating > p')
           .text()
           .trim()
         const terjual = $(a)
-          .find(
-            'div.bl-product-card__description-rating-and-sold > p'
-          )
+          .find('div.bl-product-card__description-rating-and-sold > p')
           .text()
           .trim()
 
         const dari = $(a)
-          .find(
-            'div.bl-product-card__description-store > span:nth-child(1)'
-          )
+          .find('div.bl-product-card__description-store > span:nth-child(1)')
           .text()
           .trim()
         const seller = $(a)
-          .find(
-            'div.bl-product-card__description-store > span > a'
-          )
+          .find('div.bl-product-card__description-store > span > a')
           .text()
           .trim()
         const link_sel = $(a)
-          .find(
-            'div.bl-product-card__description-store > span > a'
-          )
+          .find('div.bl-product-card__description-store > span > a')
           .attr('href')
 
         const res_ = {
           title: title,
-          rating: rating
-            ? rating
-            : 'No rating yet',
-          terjual: terjual
-            ? terjual
-            : 'Not yet bought',
+          rating: rating ? rating : 'No rating yet',
+          terjual: terjual ? terjual : 'Not yet bought',
           harga: harga,
           image: img,
           link: link,

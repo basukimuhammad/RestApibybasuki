@@ -14,26 +14,13 @@ async function searchApkmirror(query) {
       .map((_, element) => ({
         image:
           'https://www.apkmirror.com' +
-          $(element)
-            .find('.ellipsisText')
-            .attr('src'),
+          $(element).find('.ellipsisText').attr('src'),
         link:
           'https://www.apkmirror.com' +
-          $(element)
-            .find('.appRowTitle a')
-            .attr('href'),
-        title: $(element)
-          .find('.appRowTitle a')
-          .text()
-          .trim(),
-        developer: $(element)
-          .find('.byDeveloper')
-          .text()
-          .trim(),
-        uploadDate: $(element)
-          .find('.dateyear_utc')
-          .text()
-          .trim(),
+          $(element).find('.appRowTitle a').attr('href'),
+        title: $(element).find('.appRowTitle a').text().trim(),
+        developer: $(element).find('.byDeveloper').text().trim(),
+        uploadDate: $(element).find('.dateyear_utc').text().trim(),
         version: $(element)
           .next('.infoSlide')
           .find('.infoSlide-value')
@@ -54,11 +41,7 @@ async function searchApkmirror(query) {
           .trim(),
       }))
       .get()
-      .filter(obj =>
-        Object.values(obj).every(
-          value => value !== ''
-        )
-      )
+      .filter(obj => Object.values(obj).every(value => value !== ''))
 
     console.log($)
   } catch (error) {

@@ -37,8 +37,8 @@
   },
   "scripts": {
     "format": "npx prettier --write .",
-    "start": "node index.js",
-    "dev": "NODE_ENV=development nodemon --no-deprecation index.js"
+    "start": "node src/server.js",
+    "dev": "NODE_ENV=development nodemon src/server.js --no-deprecation index.js"
   },
   "repository": {
     "type": "git",

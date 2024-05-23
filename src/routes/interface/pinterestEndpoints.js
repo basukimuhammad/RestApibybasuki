@@ -4,8 +4,7 @@ const pinterestEndpoints = {
   '/pinterest/getBoard': {
     get: {
       tags: ['Pinterest'],
-      description:
-        'Retrieve data for a specific board',
+      description: 'Retrieve data for a specific board',
       parameters: [
         {
           in: 'query',
@@ -23,8 +22,7 @@ const pinterestEndpoints = {
           schema: {
             type: 'string',
           },
-          description:
-            'The slash URL of the board',
+          description: 'The slash URL of the board',
         },
         {
           in: 'query',
@@ -33,8 +31,7 @@ const pinterestEndpoints = {
           schema: {
             type: 'string',
           },
-          description:
-            'Bookmark parameter for pagination',
+          description: 'Bookmark parameter for pagination',
         },
       ],
       responses: {
@@ -54,8 +51,7 @@ const pinterestEndpoints = {
   '/pinterest/searchBoards': {
     get: {
       tags: ['Pinterest'],
-      description:
-        'Search for boards based on query',
+      description: 'Search for boards based on query',
       parameters: [
         {
           in: 'query',
@@ -64,8 +60,7 @@ const pinterestEndpoints = {
           schema: {
             type: 'string',
           },
-          description:
-            'The query string for searching boards',
+          description: 'The query string for searching boards',
         },
         {
           in: 'query',
@@ -74,8 +69,7 @@ const pinterestEndpoints = {
           schema: {
             type: 'string',
           },
-          description:
-            'Bookmark parameter for pagination',
+          description: 'Bookmark parameter for pagination',
         },
       ],
       responses: {
@@ -95,8 +89,7 @@ const pinterestEndpoints = {
   '/pinterest/searchPins': {
     get: {
       tags: ['Pinterest'],
-      description:
-        'Search for pins based on query',
+      description: 'Search for pins based on query',
       parameters: [
         {
           in: 'query',
@@ -105,8 +98,7 @@ const pinterestEndpoints = {
           schema: {
             type: 'string',
           },
-          description:
-            'The query string for searching pins',
+          description: 'The query string for searching pins',
         },
         {
           in: 'query',
@@ -115,8 +107,7 @@ const pinterestEndpoints = {
           schema: {
             type: 'string',
           },
-          description:
-            'Bookmark parameter for pagination',
+          description: 'Bookmark parameter for pagination',
         },
       ],
       responses: {
@@ -136,8 +127,7 @@ const pinterestEndpoints = {
   '/pinterest/suggestions': {
     get: {
       tags: ['Pinterest'],
-      description:
-        'Get suggestions for related pins based on pin ID',
+      description: 'Get suggestions for related pins based on pin ID',
       parameters: [
         {
           in: 'query',
@@ -155,8 +145,7 @@ const pinterestEndpoints = {
           schema: {
             type: 'string',
           },
-          description:
-            'Bookmark parameter for pagination',
+          description: 'Bookmark parameter for pagination',
         },
       ],
       responses: {

@@ -31,14 +31,8 @@ function generateRandomUserAgent() {
       'QKQ1.200114.002',
       'RQ2A.210505.003',
     ],
-    TypeOs =
-      TypeP[
-        Math.floor(Math.random() * TypeP.length)
-      ],
-    TypeCB =
-      TypeC[
-        Math.floor(Math.random() * TypeC.length)
-      ],
+    TypeOs = TypeP[Math.floor(Math.random() * TypeP.length)],
+    TypeCB = TypeC[Math.floor(Math.random() * TypeC.length)],
     NameCType =
       'Chrome/' +
       (Math.floor(Math.random() * 80) + 1) +
@@ -48,9 +42,7 @@ function generateRandomUserAgent() {
       (Math.floor(Math.random() * 9999) + 1),
     result =
       'Mozilla/5.0 (Linux; Android ' +
-      Versi[
-        Math.floor(Math.random() * Versi.length)
-      ] +
+      Versi[Math.floor(Math.random() * Versi.length)] +
       '; ' +
       TypeOs +
       ' Build/' +
@@ -66,9 +58,7 @@ function generateRandomUserAgent() {
 
 function generateRandomIP() {
   const ip = () => Math.floor(Math.random() * 256)
-  return (
-    ip() + '.' + ip() + '.' + ip() + '.' + ip()
-  )
+  return ip() + '.' + ip() + '.' + ip() + '.' + ip()
 }
 
 export default () => {
@@ -78,7 +68,4 @@ export default () => {
   }
 }
 
-export {
-  generateRandomIP,
-  generateRandomUserAgent,
-}
+export { generateRandomIP, generateRandomUserAgent }

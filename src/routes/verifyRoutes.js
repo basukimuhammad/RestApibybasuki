@@ -7,9 +7,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 
-const __dirname = dirname(
-  fileURLToPath(import.meta.url)
-)
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const router = express.Router()
 
@@ -27,10 +25,7 @@ router.get('/verify/:token', async (req, res) => {
     try {
       decoded = jwt.verify(token, 'Konbanwa')
     } catch (err) {
-      if (
-        err.name === 'TokenExpiredError' &&
-        err.message === 'jwt expired'
-      ) {
+      if (err.name === 'TokenExpiredError' && err.message === 'jwt expired') {
         return res.status(401).json({
           error:
             'Email verification token has expired. Please request a new verification email.',

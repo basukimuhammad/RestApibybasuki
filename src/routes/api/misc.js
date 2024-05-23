@@ -18,27 +18,19 @@ apiR.get('/:endpoint', (req, res) => {
 
     case 'ip':
       return res.send({
-        ip:
-          req.headers['x-forwarded-for'] ||
-          req.connection.remoteAddress,
+        ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
       })
 
     case 'clock':
       const now = Date.now()
 
-      const timeWIB = new Date(
-        now + 7 * 60 * 60 * 1000
-      )
+      const timeWIB = new Date(now + 7 * 60 * 60 * 1000)
         .toISOString()
         .slice(11, 19)
-      const timeWITA = new Date(
-        now + 8 * 60 * 60 * 1000
-      )
+      const timeWITA = new Date(now + 8 * 60 * 60 * 1000)
         .toISOString()
         .slice(11, 19)
-      const timeWIT = new Date(
-        now + 9 * 60 * 60 * 1000
-      )
+      const timeWIT = new Date(now + 9 * 60 * 60 * 1000)
         .toISOString()
         .slice(11, 19)
 
@@ -49,11 +41,7 @@ apiR.get('/:endpoint', (req, res) => {
       })
 
     default:
-      errorResponse(
-        res,
-        400,
-        'Features not found'
-      )
+      errorResponse(res, 400, 'Features not found')
   }
 })
 

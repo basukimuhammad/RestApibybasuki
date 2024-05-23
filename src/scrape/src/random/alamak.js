@@ -13,23 +13,16 @@ const userAgents = {
 }
 
 class OtakudesuApi {
-  constructor(
-    baseURL = 'https://otakudesu.cloud',
-    axiosOptions = {}
-  ) {
+  constructor(baseURL = 'https://otakudesu.cloud', axiosOptions = {}) {
     this.baseURL = baseURL
     this.AxiosOts = axios.create(axiosOptions)
 
-    this.makeHeaders = (
-      userAgent = userAgents.UA_WINDOWS,
-      headers = {}
-    ) => {
+    this.makeHeaders = (userAgent = userAgents.UA_WINDOWS, headers = {}) => {
       const defaultHeaders = {
         'user-agent': userAgent,
         'accept-language': 'en-US,en;q=0.6',
         'cache-control': 'max-age=0',
-        'if-modified-since':
-          'Mon, 11 Mar 2024 20:00:16 GMT',
+        'if-modified-since': 'Mon, 11 Mar 2024 20:00:16 GMT',
         'sec-ch-ua': userAgent,
         'sec-ch-ua-mobile': '?0',
         'sec-ch-ua-platform': 'Windows',
@@ -49,39 +42,21 @@ class OtakudesuApi {
     }
 
     this.fetchUrl = (url = '', options = {}) => {
-      const {
-        agent = userAgents.UA_WINDOWS,
-        axiosOptions = {},
-      } = options
+      const { agent = userAgents.UA_WINDOWS, axiosOptions = {} } = options
 
       return this.AxiosOts.get(url, {
         baseURL: this.baseURL,
-        headers: this.makeHeaders(
-          agent,
-          axiosOptions.headers
-        ),
+        headers: this.makeHeaders(agent, axiosOptions.headers),
         ...axiosOptions,
       })
     }
 
     this.parsePost = (html, post) => {
-      const title = html(post)
-        .find('h2')
-        .text()
-        .trim()
-      const episodes = parseInt(
-        html(post).find('div.epz').text().trim()
-      )
-      const date = html(post)
-        .find('div.newnime')
-        .text()
-        .trim()
-      const image = html(post)
-        .find('img')
-        .attr('src')
-      const url = html(post)
-        .find('a')
-        .attr('href')
+      const title = html(post).find('h2').text().trim()
+      const episodes = parseInt(html(post).find('div.epz').text().trim())
+      const date = html(post).find('div.newnime').text().trim()
+      const image = html(post).find('img').attr('src')
+      const url = html(post).find('a').attr('href')
 
       return {
         title,
@@ -107,11 +82,7 @@ class OtakudesuApi {
 
     this.filterDownload = (downloads, format) => {
       return downloads.filter(download => {
-        return (
-          download.format
-            .replace(' ', '-')
-            .toLowerCase() === format
-        )
+        return download.format.replace(' ', '-').toLowerCase() === format
       })
     }
 
@@ -122,13 +93,9 @@ class OtakudesuApi {
     }
 
     this.ongoing = (page = 1) => {
-      return this.fetchUrl(
-        `/ongoing-anime/page/${page}/`
-      ).then(response => {
+      return this.fetchUrl(`/ongoing-anime/page/${page}/`).then(response => {
         const $ = cheerio.load(response.data)
-        const posts = $(
-          '.wp-block-column.column-90'
-        )
+        const posts = $('.wp-block-column.column-90')
 
         const data = []
 
@@ -141,13 +108,9 @@ class OtakudesuApi {
     }
 
     this.animeList = (page = 1) => {
-      return this.fetchUrl(
-        `/anime-list/page/${page}/`
-      ).then(response => {
+      return this.fetchUrl(`/anime-list/page/${page}/`).then(response => {
         const $ = cheerio.load(response.data)
-        const posts = $(
-          '.wp-block-column.column-90'
-        )
+        const posts = $('.wp-block-column.column-90')
 
         const data = []
 
@@ -160,13 +123,9 @@ class OtakudesuApi {
     }
 
     this.genre = (genre, page = 1) => {
-      return this.fetchUrl(
-        `/genre/${genre}/page/${page}/`
-      ).then(response => {
+      return this.fetchUrl(`/genre/${genre}/page/${page}/`).then(response => {
         const $ = cheerio.load(response.data)
-        const posts = $(
-          '.wp-block-column.column-90'
-        )
+        const posts = $('.wp-block-column.column-90')
 
         const data = []
 
@@ -182,53 +141,35 @@ class OtakudesuApi {
       return this.fetchUrl(url).then(response => {
         const $ = cheerio.load(response.data)
 
-        const title = $('h1.entry-title')
-          .text()
-          .trim()
-        const description = $('div.description')
-          .text()
-          .trim()
-        const genre = this.parseGenre(
-          $('div.genres').text().trim()
-        )
-        const episodes = parseInt(
-          $('div.episodes').text().trim()
-        )
+        const title = $('h1.entry-title').text().trim()
+        const description = $('div.description').text().trim()
+        const genre = this.parseGenre($('div.genres').text().trim())
+        const episodes = parseInt($('div.episodes').text().trim())
         const date = $('div.date').text().trim()
-        const image = $('div.thumbnail img').attr(
-          'src'
-        )
+        const image = $('div.thumbnail img').attr('src')
 
         const downloads = []
         const mirrors = []
 
-        $('div.download-link ul li').each(
-          (index, link) => {
-            const format = $('a', link)
-              .text()
-              .trim()
-            const url = $('a', link).attr('href')
+        $('div.download-link ul li').each((index, link) => {
+          const format = $('a', link).text().trim()
+          const url = $('a', link).attr('href')
 
-            downloads.push({
-              format,
-              url,
-            })
-          }
-        )
+          downloads.push({
+            format,
+            url,
+          })
+        })
 
-        $('div.download-link ul li ul li').each(
-          (index, link) => {
-            const format = $('a', link)
-              .text()
-              .trim()
-            const url = $('a', link).attr('href')
+        $('div.download-link ul li ul li').each((index, link) => {
+          const format = $('a', link).text().trim()
+          const url = $('a', link).attr('href')
 
-            mirrors.push({
-              format,
-              url,
-            })
-          }
-        )
+          mirrors.push({
+            format,
+            url,
+          })
+        })
 
         return {
           title,
@@ -247,31 +188,20 @@ class OtakudesuApi {
       return this.fetchUrl(url).then(response => {
         const $ = cheerio.load(response.data)
 
-        const downloadLink = $(
-          'div.download-link a'
-        ).attr('href')
+        const downloadLink = $('div.download-link a').attr('href')
         const mirrors = []
 
-        $('div.download-link ul li').each(
-          (index, link) => {
-            const mirrorFormat = $('a', link)
-              .text()
-              .trim()
-            const mirrorUrl = $('a', link).attr(
-              'href'
-            )
+        $('div.download-link ul li').each((index, link) => {
+          const mirrorFormat = $('a', link).text().trim()
+          const mirrorUrl = $('a', link).attr('href')
 
-            mirrors.push({
-              format: mirrorFormat,
-              url: mirrorUrl,
-            })
-          }
-        )
+          mirrors.push({
+            format: mirrorFormat,
+            url: mirrorUrl,
+          })
+        })
 
-        const download = this.filterDownload(
-          mirrors,
-          format
-        )
+        const download = this.filterDownload(mirrors, format)
 
         if (download.length > 0) {
           return download[0].url
@@ -285,31 +215,20 @@ class OtakudesuApi {
       return this.fetchUrl(url).then(response => {
         const $ = cheerio.load(response.data)
 
-        const mirrorLink = $(
-          'div.download-link a'
-        ).attr('href')
+        const mirrorLink = $('div.download-link a').attr('href')
         const mirrors = []
 
-        $('div.download-link ul li').each(
-          (index, link) => {
-            const mirrorFormat = $('a', link)
-              .text()
-              .trim()
-            const mirrorUrl = $('a', link).attr(
-              'href'
-            )
+        $('div.download-link ul li').each((index, link) => {
+          const mirrorFormat = $('a', link).text().trim()
+          const mirrorUrl = $('a', link).attr('href')
 
-            mirrors.push({
-              format: mirrorFormat,
-              url: mirrorUrl,
-            })
-          }
-        )
+          mirrors.push({
+            format: mirrorFormat,
+            url: mirrorUrl,
+          })
+        })
 
-        const mirror = this.filterMirror(
-          mirrors,
-          format
-        )
+        const mirror = this.filterMirror(mirrors, format)
 
         if (mirror.length > 0) {
           return mirror[0].url
@@ -321,33 +240,22 @@ class OtakudesuApi {
 
     this.filterDownload = (mirrors, format) => {
       return mirrors.filter(
-        mirror =>
-          mirror.format.toLowerCase() ===
-          format.toLowerCase()
+        mirror => mirror.format.toLowerCase() === format.toLowerCase()
       )
     }
 
     this.filterMirror = (mirrors, format) => {
       return mirrors.filter(
-        mirror =>
-          mirror.format.toLowerCase() ===
-          format.toLowerCase()
+        mirror => mirror.format.toLowerCase() === format.toLowerCase()
       )
     }
 
     this.parsePost = ($, post) => {
       const title = $('h2 a', post).text().trim()
       const url = $('h2 a', post).attr('href')
-      const thumbnail = $(
-        'div.thumbnail img',
-        post
-      ).attr('src')
-      const date = $('div.date', post)
-        .text()
-        .trim()
-      const episodes = $('div.episodes', post)
-        .text()
-        .trim()
+      const thumbnail = $('div.thumbnail img', post).attr('src')
+      const date = $('div.date', post).text().trim()
+      const episodes = $('div.episodes', post).text().trim()
 
       return {
         title,
@@ -365,11 +273,9 @@ class OtakudesuApi {
     }
 
     this.fetchUrl = url => {
-      return axios
-        .get(baseUrl + url)
-        .catch(error => {
-          console.error('Error:', error)
-        })
+      return axios.get(baseUrl + url).catch(error => {
+        console.error('Error:', error)
+      })
     }
   }
 }

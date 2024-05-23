@@ -5,23 +5,15 @@ import cheerio from 'cheerio'
 
 async function scrapeAppUrl(url) {
   try {
-    const response = await axios.get(
-      url + '?download'
-    )
+    const response = await axios.get(url + '?download')
     const html = response.data
     const $ = cheerio.load(html)
     let appLink = $('.app').attr('href')
 
     while (!appLink) {
-      console.log(
-        'Download button is not available yet. Waiting...'
-      )
-      await new Promise(resolve =>
-        setTimeout(resolve, 5000)
-      )
-      const res = await axios.get(
-        url + '?download'
-      )
+      console.log('Download button is not available yet. Waiting...')
+      await new Promise(resolve => setTimeout(resolve, 5000))
+      const res = await axios.get(url + '?download')
       const html = res.data
       const $ = cheerio.load(html)
       appLink = $('.app').attr('href')
@@ -36,8 +28,7 @@ async function scrapeAppUrl(url) {
       throw new Error('Download button not found')
     }
 
-    const downloadUrl =
-      downloadButton.attr('href')
+    const downloadUrl = downloadButton.attr('href')
     return downloadUrl
   } catch (error) {
     console.error('Error:', error)
@@ -54,19 +45,11 @@ async function scrapeGameData(query) {
 
     const results = $('article')
       .map((index, element) => {
-        const title = $(element)
-          .find('.entry-title')
-          .text()
-        const excerpt = $(element)
-          .find('.entry-excerpt')
-          .text()
-        const href = $(element)
-          .find('a')
-          .attr('href')
+        const title = $(element).find('.entry-title').text()
+        const excerpt = $(element).find('.entry-excerpt').text()
+        const href = $(element).find('a').attr('href')
         const imageSrc =
-          $(element)
-            .find('img')
-            .attr('data-cfsrc') ||
+          $(element).find('img').attr('data-cfsrc') ||
           $(element).find('img').attr('src')
 
         return {

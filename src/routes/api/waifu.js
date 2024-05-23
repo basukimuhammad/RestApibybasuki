@@ -38,12 +38,7 @@ const categories = [
   'dance',
   'cringe',
 ]
-const nsfwCategories = [
-  'waifu',
-  'neko',
-  'trap',
-  'blowjob',
-]
+const nsfwCategories = ['waifu', 'neko', 'trap', 'blowjob']
 
 async function getWaifuImage(type, category) {
   try {
@@ -71,38 +66,23 @@ app.get('/:type', async (req, res) => {
   const { category } = req.query
 
   if (!category) {
-    return res
-      .status(400)
-      .json({ error: 'Harap berikan kategori.' })
+    return res.status(400).json({ error: 'Harap berikan kategori.' })
   }
 
   try {
-    const availableCategories =
-      type === 'nsfw'
-        ? nsfwCategories
-        : categories
+    const availableCategories = type === 'nsfw' ? nsfwCategories : categories
 
     if (!availableCategories.includes(category)) {
-      return res
-        .status(400)
-        .json({ error: 'Kategori tidak valid.' })
+      return res.status(400).json({ error: 'Kategori tidak valid.' })
     }
 
-    const data = await getWaifuImage(
-      type,
-      category
-    )
+    const data = await getWaifuImage(type, category)
     await sendJSONResponse(res, data.url)
   } catch (error) {
-    console.error(
-      'Gagal mengambil gambar waifu:',
-      error.message
-    )
-    res
-      .status(500)
-      .json({
-        error: 'Gagal mengambil gambar waifu.',
-      })
+    console.error('Gagal mengambil gambar waifu:', error.message)
+    res.status(500).json({
+      error: 'Gagal mengambil gambar waifu.',
+    })
   }
 })
 

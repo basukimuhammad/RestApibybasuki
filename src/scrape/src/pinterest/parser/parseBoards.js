@@ -10,10 +10,8 @@ export default function parseBoards(data) {
     const name = response?.name
     const id = response?.id
     const type = response?.type
-    const thumbnailURL =
-      response?.image_thumbnail_url
-    const thumbnailImagesURL =
-      response?.pin_thumbnail_urls
+    const thumbnailURL = response?.image_thumbnail_url
+    const thumbnailImagesURL = response?.pin_thumbnail_urls
     const coverURL = response?.image_cover_hd_url
     const slashURL = response?.url
     const pinCount = response?.pin_count
