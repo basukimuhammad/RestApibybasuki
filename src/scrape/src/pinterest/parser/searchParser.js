@@ -4,18 +4,24 @@ import formatDate from './formatDate.js'
 export default function searchParser(data) {
   const root = data?.resource_response
   const results = root?.data?.results
-  const bookmark = data?.resource?.options?.bookmarks[0]
+  const bookmark =
+    data?.resource?.options?.bookmarks[0]
   const array = []
 
   results.map((response, index, _) => {
     const imageURL = response?.images?.orig?.url
-    const title = response?.title ? response.grid_title : response?.title
+    const title = response?.title
+      ? response.grid_title
+      : response?.title
     const id = response?.id
     const date = response?.created_at
     const type = response?.type
     const pinner = response?.pinner
     const initialDate = new Date(date)
-    const formattedDate = formatDate(initialDate, 'yyyy-MM-dd')
+    const formattedDate = formatDate(
+      initialDate,
+      'yyyy-MM-dd'
+    )
 
     array.push({
       id,

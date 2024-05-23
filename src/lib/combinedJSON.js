@@ -12,12 +12,19 @@ import converter from './converter.js'
  * @param {string} extension - The file extension
  * @returns {Promise<string[]>} - Array of file names
  */
-const getFilesByExtension = async (directory, extension) => {
+const getFilesByExtension = async (
+  directory,
+  extension
+) => {
   try {
     const files = await fs.readdir(directory)
-    return files.filter(file => file.endsWith(extension))
+    return files.filter(file =>
+      file.endsWith(extension)
+    )
   } catch (error) {
-    throw new Error(`Error reading directory: ${error.message}`)
+    throw new Error(
+      `Error reading directory: ${error.message}`
+    )
   }
 }
 
@@ -28,10 +35,14 @@ const getFilesByExtension = async (directory, extension) => {
  */
 const importModule = async modulePath => {
   try {
-    const { default: module } = await import(modulePath)
+    const { default: module } = await import(
+      modulePath
+    )
     return module
   } catch (error) {
-    throw new Error(`Error importing module: ${error.message}`)
+    throw new Error(
+      `Error importing module: ${error.message}`
+    )
   }
 }
 
@@ -41,10 +52,21 @@ const importModule = async modulePath => {
  */
 export default async function CombinedJSON() {
   try {
-    const interfacePath = path.join(process.cwd(), './src/routes/interface')
-    const endpointFiles = await getFilesByExtension(interfacePath, '.js')
+    const interfacePath = path.join(
+      process.cwd(),
+      './src/routes/interface'
+    )
+    const endpointFiles =
+      await getFilesByExtension(
+        interfacePath,
+        '.js'
+      )
     const endpointModules = await Promise.all(
-      endpointFiles.map(file => importModule(path.join(interfacePath, file)))
+      endpointFiles.map(file =>
+        importModule(
+          path.join(interfacePath, file)
+        )
+      )
     )
 
     return {
@@ -130,23 +152,38 @@ export default async function CombinedJSON() {
                 'dance',
                 'cringe',
               ],
-              nsfw: ['waifu', 'neko', 'trap', 'blowjob'],
+              nsfw: [
+                'waifu',
+                'neko',
+                'trap',
+                'blowjob',
+              ],
             },
           },
         },
       },
       paths: endpointModules.reduce(
-        (paths, module) => ({ ...paths, ...module }),
+        (paths, module) => ({
+          ...paths,
+          ...module,
+        }),
         {}
       ),
     }
   } catch (error) {
-    throw new Error(`Error generating combined JSON: ${error.message}`)
+    throw new Error(
+      `Error generating combined JSON: ${error.message}`
+    )
   }
 }
 
-const writeFileWithSpinner = async (filePath, data) => {
-  const spinner = ora(`Writing to ${filePath}`).start()
+const writeFileWithSpinner = async (
+  filePath,
+  data
+) => {
+  const spinner = ora(
+    `Writing to ${filePath}`
+  ).start()
   try {
     await fs.access(filePath, fs.constants.F_OK)
     await fs.unlink(filePath)
@@ -157,18 +194,30 @@ const writeFileWithSpinner = async (filePath, data) => {
     await fs.writeFile(filePath, data)
     spinner.succeed(`${filePath}`)
   } catch (error) {
-    spinner.fail(`Failed to write to ${filePath}: ${error.message}`)
+    spinner.fail(
+      `Failed to write to ${filePath}: ${error.message}`
+    )
     console.error('Error details:', error)
   }
 }
-const dir = dirname(fileURLToPath(import.meta.url))
+const dir = dirname(
+  fileURLToPath(import.meta.url)
+)
 ;(async () => {
   try {
-    if (!process.env.NODE_ENV === 'development') return
+    if (!process.env.NODE_ENV === 'development')
+      return
 
-    const json = JSON.stringify(await CombinedJSON(), null, 2)
+    const json = JSON.stringify(
+      await CombinedJSON(),
+      null,
+      2
+    )
     // console.log(json)
-    await writeFileWithSpinner(join(dir, '../views/pages/swagger.json'), json)
+    await writeFileWithSpinner(
+      join(dir, '../views/pages/swagger.json'),
+      json
+    )
     await writeFileWithSpinner(
       join(dir, '../views/pages/swagger.js'),
       await converter(json)

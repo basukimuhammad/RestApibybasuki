@@ -4,10 +4,14 @@ import axios from 'axios'
 
 async function VURL(url) {
   try {
-    const response = await axios.get(`https://vurl.com/api.php?url=${url}`)
+    const response = await axios.get(
+      `https://vurl.com/api.php?url=${url}`
+    )
     return response.data
   } catch (error) {
-    throw new Error(`HTTP error! Status: ${error.response.status}`)
+    throw new Error(
+      `HTTP error! Status: ${error.response.status}`
+    )
   }
 }
 
@@ -18,7 +22,9 @@ async function shortenWithVgd(url) {
     )
     return response.data.shorturl
   } catch (error) {
-    throw new Error(`HTTP error! Status: ${error.response.status}`)
+    throw new Error(
+      `HTTP error! Status: ${error.response.status}`
+    )
   }
 }
 
@@ -46,7 +52,8 @@ function shorter(url) {
         }),
         {
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'Content-Type':
+              'application/x-www-form-urlencoded; charset=UTF-8',
             Accept: '*/*',
             'X-Requested-With': 'XMLHttpRequest',
             'User-Agent':
@@ -68,4 +75,9 @@ function shorter(url) {
   })
 }
 
-export { VURL, shortenWithVgd, shortenWithIsGd, shorter }
+export {
+  VURL,
+  shortenWithVgd,
+  shortenWithIsGd,
+  shorter,
+}

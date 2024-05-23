@@ -1,7 +1,8 @@
 /** @format */
 
 export default function formatDate(date, format) {
-  const pad = n => (n < 10 ? '0' + n : n.toString())
+  const pad = n =>
+    n < 10 ? '0' + n : n.toString()
 
   const year = date.getFullYear()
   const month = pad(date.getMonth() + 1)

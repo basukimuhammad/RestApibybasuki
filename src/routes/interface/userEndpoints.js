@@ -40,7 +40,8 @@ const swaggerDocument = {
       ],
       responses: {
         200: {
-          description: 'User registered successfully',
+          description:
+            'User registered successfully',
         },
         400: {
           description: 'Bad Request',

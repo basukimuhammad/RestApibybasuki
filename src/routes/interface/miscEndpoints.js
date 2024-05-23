@@ -14,7 +14,8 @@ const miscEndpoints = {
                 properties: {
                   uptime: {
                     type: 'number',
-                    description: 'Application uptime in seconds',
+                    description:
+                      'Application uptime in seconds',
                   },
                 },
               },

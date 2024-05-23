@@ -10,7 +10,10 @@ async function cekGambar(img) {
     const data = response.data.nudity
     return data
   } catch (error) {
-    console.error('Kesalahan dalam pemeriksaan gambar:', error)
+    console.error(
+      'Kesalahan dalam pemeriksaan gambar:',
+      error
+    )
   }
 }
 

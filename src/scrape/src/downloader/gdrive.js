@@ -4,18 +4,27 @@ import { URL } from 'url'
 import jsdom from 'jsdom'
 import fetch from 'node-fetch'
 const { JSDOM } = jsdom
-const isID = str => /^[a-zA-Z0-9_-]{8,64}$/.test(str)
+const isID = str =>
+  /^[a-zA-Z0-9_-]{8,64}$/.test(str)
 const isUrl = str => /^https?:\/\//.test(str)
-const validateStatus = status => status >= 200 && status < 400
+const validateStatus = status =>
+  status >= 200 && status < 400
 
 function getItemId(url) {
   return new Promise(async (resolve, reject) => {
     const parsed = await parseUrl(url)
-    if (parsed.searchParams.has('id')) resolve(parsed.searchParams.get('id'))
+    if (parsed.searchParams.has('id'))
+      resolve(parsed.searchParams.get('id'))
     const segments = parsed.pathname.split('/')
-    const index = segments.findIndex(it => it === 'd')
+    const index = segments.findIndex(
+      it => it === 'd'
+    )
     if (index === -1)
-      reject(new TypeError(`Failed to extract id from url: ${url}`))
+      reject(
+        new TypeError(
+          `Failed to extract id from url: ${url}`
+        )
+      )
     else resolve(segments[index + 1])
   })
 }
@@ -31,7 +40,13 @@ function parseUrl(url) {
 }
 
 function abbreviateNumber(number) {
-  const SI_POSTFIXES = ['', 'KB', 'MB', 'GB', 'TB']
+  const SI_POSTFIXES = [
+    '',
+    'KB',
+    'MB',
+    'GB',
+    'TB',
+  ]
   const sign = number < 0 ? '-1' : ''
   const absNumber = Math.abs(number)
   const tier = (Math.log10(absNumber) / 3) | 0
@@ -41,7 +56,9 @@ function abbreviateNumber(number) {
   const scaled = absNumber / scale
   const floored = Math.floor(scaled * 10) / 10
   let str = floored.toFixed(1)
-  str = /\.0$/.test(str) ? str.substr(0, str.length - 2) : str
+  str = /\.0$/.test(str)
+    ? str.substr(0, str.length - 2)
+    : str
   return `${sign}${str}${postfix}`
 }
 
@@ -50,27 +67,46 @@ function getFileNameSize(url) {
     try {
       const response = await fetch(url)
 
-      if (response.headers.has('content-disposition')) {
-        const contentDisposition = response.headers.get('content-disposition')
-        const match = contentDisposition.match(/filename="(.+?)"/)
+      if (
+        response.headers.has(
+          'content-disposition'
+        )
+      ) {
+        const contentDisposition =
+          response.headers.get(
+            'content-disposition'
+          )
+        const match = contentDisposition.match(
+          /filename="(.+?)"/
+        )
         const fileName = match ? match[1] : null
 
-        const contentType = response.headers.get('content-type')
+        const contentType = response.headers.get(
+          'content-type'
+        )
 
-        const contentSize = response.headers.get('content-length')
-        const fileSize = contentSize ? parseInt(contentSize, 10) : null
+        const contentSize = response.headers.get(
+          'content-length'
+        )
+        const fileSize = contentSize
+          ? parseInt(contentSize, 10)
+          : null
 
         resolve({
           fileName: fileName ?? '',
           contentType: contentType ?? '',
-          fileSize: abbreviateNumber(fileSize ?? 0),
+          fileSize: abbreviateNumber(
+            fileSize ?? 0
+          ),
           fileSizeB: fileSize ?? 0,
         })
       } else {
         resolve({
           fileName: '',
           contentType: '',
-          fileSize: abbreviateNumber(fileSize ?? 0),
+          fileSize: abbreviateNumber(
+            fileSize ?? 0
+          ),
           fileSizeB: 0,
         })
       }
@@ -88,7 +124,10 @@ function getFileNameSize(url) {
 async function getIdDrive(url, skip = false) {
   return new Promise(async (resolve, reject) => {
     try {
-      if (!isUrl(url) || !/drive\.google\.com/i.test(url))
+      if (
+        !isUrl(url) ||
+        !/drive\.google\.com/i.test(url)
+      )
         throw new Error('Invalid URL: ' + url)
 
       const docID = await getItemId(url)
@@ -98,11 +137,20 @@ async function getIdDrive(url, skip = false) {
       const response = await fetch(url_, {
         redirect: 'manual',
       })
-      if (validateStatus(response.status) && response.headers.has('location')) {
-        const redirectedUrl = response.headers.get('location')
-        const isGoogleHost = redirectedUrl.includes('googleusercontent.com')
+      if (
+        validateStatus(response.status) &&
+        response.headers.has('location')
+      ) {
+        const redirectedUrl =
+          response.headers.get('location')
+        const isGoogleHost =
+          redirectedUrl.includes(
+            'googleusercontent.com'
+          )
         if (redirectedUrl && isGoogleHost) {
-          let FileInfo = await getFileNameSize(redirectedUrl)
+          let FileInfo = await getFileNameSize(
+            redirectedUrl
+          )
           resolve({
             downloadUrl: redirectedUrl,
             ...FileInfo,
@@ -114,7 +162,9 @@ async function getIdDrive(url, skip = false) {
         validateStatus(response.status) &&
         !response.headers.has('location')
       ) {
-        const htmlResponse = await fetch(url_).then(res => res.text())
+        const htmlResponse = await fetch(
+          url_
+        ).then(res => res.text())
         const dom = new JSDOM(htmlResponse)
         const formAction = dom.window.document
           .querySelector('form')
@@ -131,7 +181,10 @@ async function getIdDrive(url, skip = false) {
 async function GDriveDl(url) {
   return new Promise(async (resolve, reject) => {
     try {
-      if (!isUrl(url) || !/drive\.google\.com/i.test(url)) {
+      if (
+        !isUrl(url) ||
+        !/drive\.google\.com/i.test(url)
+      ) {
         throw new Error('Invalid URL: ' + url)
       }
 
@@ -142,21 +195,23 @@ async function GDriveDl(url) {
         {
           method: 'post',
           headers: {
-            'accept-encoding': 'gzip, deflate, br',
+            'accept-encoding':
+              'gzip, deflate, br',
             'content-length': 0,
-            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+            'Content-Type':
+              'application/x-www-form-urlencoded;charset=UTF-8',
             origin: 'https://drive.google.com',
             'user-agent':
               'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
-            'x-client-data': 'CKG1yQEIkbbJAQiitskBCMS2yQEIqZ3KAQioo8oBGLeYygE=',
+            'x-client-data':
+              'CKG1yQEIkbbJAQiitskBCMS2yQEIqZ3KAQioo8oBGLeYygE=',
             'x-drive-first-party': 'DriveWebUi',
             'x-json-requested': 'true',
           },
         }
       )
-      const { fileName, sizeBytes, downloadUrl } = JSON.parse(
-        (await res.text()).slice(4)
-      )
+      const { fileName, sizeBytes, downloadUrl } =
+        JSON.parse((await res.text()).slice(4))
       if (!downloadUrl) {
         resolve({
           message: 'Link Download Limit!',
@@ -180,7 +235,9 @@ async function GDriveDl(url) {
         downloadUrl,
         fileName,
         fileSize: abbreviateNumber(sizeBytes),
-        mimetype: data.headers.get('content-type'),
+        mimetype: data.headers.get(
+          'content-type'
+        ),
       })
     } catch (error) {
       resolve({

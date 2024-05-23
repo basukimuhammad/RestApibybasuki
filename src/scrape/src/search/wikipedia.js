@@ -5,7 +5,9 @@ import cheerio from 'cheerio'
 
 async function wikipedia(query) {
   try {
-    const link = await axios.get(`https://id.m.wikipedia.org/wiki/${query}`)
+    const link = await axios.get(
+      `https://id.m.wikipedia.org/wiki/${query}`
+    )
     const $ = cheerio.load(link.data)
     const judul = $('#firstHeading').text().trim()
     const thumb =
@@ -13,11 +15,17 @@ async function wikipedia(query) {
         .find(
           'div.mw-parser-output > div:nth-child(1) > table > tbody > tr:nth-child(2) > td > a > img'
         )
-        .attr('src') || '//i.postimg.cc/Z5b1WDwD/1675949861324.jpg'
+        .attr('src') ||
+      '//i.postimg.cc/Z5b1WDwD/1675949861324.jpg'
     const isi = []
 
-    $('#mw-content-text > div.mw-parser-output').each(function (rayy, Ra) {
-      const penjelasan = $(Ra).find('p').text().trim()
+    $(
+      '#mw-content-text > div.mw-parser-output'
+    ).each(function (rayy, Ra) {
+      const penjelasan = $(Ra)
+        .find('p')
+        .text()
+        .trim()
       isi.push(penjelasan)
     })
 

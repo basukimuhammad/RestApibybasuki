@@ -6,15 +6,25 @@ import FormData from 'form-data'
 const saucenao = async imageUrl => {
   const formData = new FormData()
   formData.append('output_type', '2')
-  formData.append('api_key', '58eb687f35decd24507ada808a643fb719931c18')
+  formData.append(
+    'api_key',
+    '58eb687f35decd24507ada808a643fb719931c18'
+  )
   formData.append('url', imageUrl)
 
-  let res = await axios.post('https://saucenao.com/search.php', formData, {
-    headers: formData.getHeaders(),
-  })
+  let res = await axios.post(
+    'https://saucenao.com/search.php',
+    formData,
+    {
+      headers: formData.getHeaders(),
+    }
+  )
   let json = res.data
 
-  if (!json.results || json.results.length === 0) {
+  if (
+    !json.results ||
+    json.results.length === 0
+  ) {
     throw 'No results found.'
   }
 
@@ -22,7 +32,8 @@ const saucenao = async imageUrl => {
     let similarity = result.header.similarity
     let thumbnailUrl = result.header.thumbnail
     let indexName = result.header.index_name
-    let { title, member_name, ext_urls } = result.data
+    let { title, member_name, ext_urls } =
+      result.data
 
     return {
       title,

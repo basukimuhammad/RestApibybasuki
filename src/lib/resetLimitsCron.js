@@ -15,9 +15,14 @@ async function resetLimitsCron() {
         }
       )
 
-      console.log('API key limits reset successfully.')
+      console.log(
+        'API key limits reset successfully.'
+      )
     } catch (error) {
-      console.error('Error resetting API key limits:', error)
+      console.error(
+        'Error resetting API key limits:',
+        error
+      )
     }
   })
 }

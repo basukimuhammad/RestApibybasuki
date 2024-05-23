@@ -3,7 +3,10 @@
 import { Api } from './api/api.js'
 import request from './fetch/request.js'
 import parserSearch from './parser/searchParser.js'
-export default async function searchPins(query, bookMark) {
+export default async function searchPins(
+  query,
+  bookMark
+) {
   if (!query) throw Error('No query specified')
 
   const params = {

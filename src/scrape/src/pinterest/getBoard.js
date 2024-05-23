@@ -6,7 +6,8 @@ import { Api } from './api/api.js'
 
 export default async function getBoard(options) {
   if (!id) throw Error('No id specified.')
-  if (!slashurl) throw Error('No slash url specified.')
+  if (!slashurl)
+    throw Error('No slash url specified.')
 
   const params = {
     source_url: `${slashurl}`,

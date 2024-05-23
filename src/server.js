@@ -6,6 +6,10 @@ import chalk from 'chalk'
 import('./lib/message.js')
 const port = process.env.PORT || 3000
 app.listen(port, () => {
-  console.log(chalk.cyan(`Server is running on port ${port}`))
+  console.log(
+    chalk.cyan(
+      `Server is running on port ${port}`
+    )
+  )
 })
 export default app

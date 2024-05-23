@@ -7,9 +7,12 @@ const domain = 'https://ssscapcut.com/'
 function getCookies() {
   return new Promise((resolve, reject) => {
     axios
-      .get('https://anydownloader.com/en/twitter-video-downloader')
+      .get(
+        'https://anydownloader.com/en/twitter-video-downloader'
+      )
       .then(response => {
-        const cookiesArray = response.headers['set-cookie']
+        const cookiesArray =
+          response.headers['set-cookie']
         resolve(cookiesArray)
       })
       .catch(error => {
@@ -27,8 +30,12 @@ function getSpotifyTrackId(url) {
 function spotifyDl(Url) {
   return new Promise(async (resolve, reject) => {
     try {
-      const isUrl = str => /^https?:\/\//.test(str)
-      if (!isUrl(Url) || !/open\.spotify\.com/i.test(Url))
+      const isUrl = str =>
+        /^https?:\/\//.test(str)
+      if (
+        !isUrl(Url) ||
+        !/open\.spotify\.com/i.test(Url)
+      )
         throw new Error('Invalid URL: ' + Url)
       await axios
         .get(
@@ -41,8 +48,10 @@ function spotifyDl(Url) {
           },
           {
             headers: {
-              Accept: 'application/json, text/javascript, */*; q=0.01',
-              'X-Requested-With': 'XMLHttpRequest',
+              Accept:
+                'application/json, text/javascript, */*; q=0.01',
+              'X-Requested-With':
+                'XMLHttpRequest',
               'User-Agent':
                 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Mobile Safari/537.36',
               Referer: 'https://spotidown.com/',
@@ -70,7 +79,11 @@ function spotifyDl(Url) {
 function updateUrls(obj) {
   const regex =
     /("originalVideoUrl": "| "authorUrl": "|"coverUrl": ")(\/[^"]+)/g
-  const updatedData = JSON.stringify(obj, null, 2).replace(
+  const updatedData = JSON.stringify(
+    obj,
+    null,
+    2
+  ).replace(
     regex,
     (match, p1, p2) => p1 + domain + p2
   )

@@ -10,7 +10,8 @@ const fetchWeather = async daerah => {
         params: {
           q: daerah,
           units: 'metric',
-          appid: '060a6bcfa19809c2cd4d97a212b19273',
+          appid:
+            '060a6bcfa19809c2cd4d97a212b19273',
         },
       }
     )

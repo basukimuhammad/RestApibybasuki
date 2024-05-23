@@ -15,7 +15,8 @@ router.get('/cekey', checkApiKey)
 
 async function registerUser(req, res) {
   try {
-    const { email, password, username, apiKey } = req.query
+    const { email, password, username, apiKey } =
+      req.query
 
     if (!email || !validator.isEmail(email))
       return res.status(400).json({
@@ -28,7 +29,8 @@ async function registerUser(req, res) {
       })
     )
       return res.status(400).json({
-        error: 'Password must be at least 6 characters long.',
+        error:
+          'Password must be at least 6 characters long.',
       })
     if (
       !username ||
@@ -37,7 +39,8 @@ async function registerUser(req, res) {
       })
     )
       return res.status(400).json({
-        error: 'Username must be at least 3 characters long.',
+        error:
+          'Username must be at least 3 characters long.',
       })
     if (!apiKey)
       return res.status(400).json({
@@ -49,18 +52,26 @@ async function registerUser(req, res) {
     })
     if (existingUser)
       return res.status(400).json({
-        error: 'User with this email already exists.',
+        error:
+          'User with this email already exists.',
       })
     const existingKey = await User.findOne({
       apiKey,
     })
-    if (existingKey && existingKey.apiKey === apiKey)
+    if (
+      existingKey &&
+      existingKey.apiKey === apiKey
+    )
       return res.status(400).json({
-        error: 'User with this apiKey already exists.',
+        error:
+          'User with this apiKey already exists.',
       })
 
     const saltRounds = 10
-    const hashedPassword = await bcrypt.hash(password, saltRounds)
+    const hashedPassword = await bcrypt.hash(
+      password,
+      saltRounds
+    )
 
     const newUser = new User({
       apiKey,
@@ -82,11 +93,17 @@ async function registerUser(req, res) {
 
     const verificationUrl = `${req.protocol}://${req.get('host')}/verify/${accessToken}`
 
-    await sendVerificationEmail(email, verificationUrl)
+    await sendVerificationEmail(
+      email,
+      verificationUrl
+    )
 
     res.send('Check email for verification')
   } catch (error) {
-    console.error('Error registering user:', error)
+    console.error(
+      'Error registering user:',
+      error
+    )
     res.status(500).json({
       error: 'Internal Server Error',
     })
@@ -101,7 +118,13 @@ async function getUserProfile(req, res) {
       email,
     })
 
-    if (!user || !(await bcrypt.compare(password, user.password)))
+    if (
+      !user ||
+      !(await bcrypt.compare(
+        password,
+        user.password
+      ))
+    )
       return res.status(400).json({
         error: 'Invalid email or password.',
       })
@@ -138,7 +161,10 @@ async function checkApiKey(req, res) {
   })
 }
 
-async function sendVerificationEmail(toEmail, verificationUrl) {
+async function sendVerificationEmail(
+  toEmail,
+  verificationUrl
+) {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -177,7 +203,10 @@ async function sendVerificationEmail(toEmail, verificationUrl) {
   try {
     await transporter.sendMail(mailOptions)
   } catch (error) {
-    console.error('Error sending verification email:', error)
+    console.error(
+      'Error sending verification email:',
+      error
+    )
   }
 }
 

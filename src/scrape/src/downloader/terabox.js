@@ -32,7 +32,9 @@ export default async function terabox(url) {
       uk: fileInfo.uk,
       sign: fileInfo.sign,
       timestamp: fileInfo.timestamp,
-      fsId: file.children.length ? file.children[0].fs_id : file.fs_id,
+      fsId: file.children.length
+        ? file.children[0].fs_id
+        : file.fs_id,
     }
 
     const downloadUrl = await getLink(payload)

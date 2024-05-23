@@ -18,9 +18,12 @@ function ToolRemoveBg(imageUrl) {
           headers: {
             authority: 'www.onlineconverter.com',
             accept: '*/*',
-            'accept-language': 'ms-MY,ms;q=0.9,en-US;q=0.8,en;q=0.7,id;q=0.6',
-            referer: 'https://www.onlineconverter.com/remove-image-background',
-            'sec-ch-ua': '"Not)A;Brand";v="24", "Chromium";v="116"',
+            'accept-language':
+              'ms-MY,ms;q=0.9,en-US;q=0.8,en;q=0.7,id;q=0.6',
+            referer:
+              'https://www.onlineconverter.com/remove-image-background',
+            'sec-ch-ua':
+              '"Not)A;Brand";v="24", "Chromium";v="116"',
             'sec-ch-ua-mobile': '?1',
             'sec-ch-ua-platform': '"Android"',
             'sec-fetch-dest': 'empty',
@@ -34,9 +37,12 @@ function ToolRemoveBg(imageUrl) {
 
       const urlHost = responseHost.data
 
-      const imageResponse = await axios.get(imageUrl, {
-        responseType: 'arraybuffer',
-      })
+      const imageResponse = await axios.get(
+        imageUrl,
+        {
+          responseType: 'arraybuffer',
+        }
+      )
 
       // Langkah kedua: Upload gambar
       const form = new FormData()
@@ -49,51 +55,70 @@ function ToolRemoveBg(imageUrl) {
       form.append('to', 'remove-image-background')
       form.append('source', 'online')
 
-      const responseUpload = await axios.post(urlHost, form, {
-        headers: {
-          ...form.getHeaders(),
-          authority: urlHost,
-          accept: '*/*',
-          'accept-language': 'ms-MY,ms;q=0.9,en-US;q=0.8,en;q=0.7,id;q=0.6',
-          origin: 'https://www.onlineconverter.com',
-          referer: 'https://www.onlineconverter.com/',
-          'sec-ch-ua': '"Not)A;Brand";v="24", "Chromium";v="116"',
-          'sec-ch-ua-mobile': '?1',
-          'sec-ch-ua-platform': '"Android"',
-          'sec-fetch-dest': 'empty',
-          'sec-fetch-mode': 'cors',
-          'sec-fetch-site': 'same-site',
-          'user-agent':
-            'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36',
-        },
-      })
+      const responseUpload = await axios.post(
+        urlHost,
+        form,
+        {
+          headers: {
+            ...form.getHeaders(),
+            authority: urlHost,
+            accept: '*/*',
+            'accept-language':
+              'ms-MY,ms;q=0.9,en-US;q=0.8,en;q=0.7,id;q=0.6',
+            origin:
+              'https://www.onlineconverter.com',
+            referer:
+              'https://www.onlineconverter.com/',
+            'sec-ch-ua':
+              '"Not)A;Brand";v="24", "Chromium";v="116"',
+            'sec-ch-ua-mobile': '?1',
+            'sec-ch-ua-platform': '"Android"',
+            'sec-fetch-dest': 'empty',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-site': 'same-site',
+            'user-agent':
+              'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36',
+          },
+        }
+      )
       const resultUrl = responseUpload.data
-      const id = resultUrl.match(/(?:convert\/)(\w+)/)[1]
+      const id = resultUrl.match(
+        /(?:convert\/)(\w+)/
+      )[1]
       const newUrl = `${urlHost.split('/send').join('')}/${id}`
-      const responseDownload = await axios.get(newUrl, {
-        headers: {
-          authority: urlHost,
-          accept: '*/*',
-          'accept-language': 'ms-MY,ms;q=0.9,en-US;q=0.8,en;q=0.7,id;q=0.6',
-          origin: 'https://www.onlineconverter.com',
-          referer: 'https://www.onlineconverter.com/',
-          'sec-ch-ua': '"Not)A;Brand";v="24", "Chromium";v="116"',
-          'sec-ch-ua-mobile': '?1',
-          'sec-ch-ua-platform': '"Android"',
-          'sec-fetch-dest': 'empty',
-          'sec-fetch-mode': 'cors',
-          'sec-fetch-site': 'same-site',
-          'user-agent':
-            'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36',
-        },
-      })
+      const responseDownload = await axios.get(
+        newUrl,
+        {
+          headers: {
+            authority: urlHost,
+            accept: '*/*',
+            'accept-language':
+              'ms-MY,ms;q=0.9,en-US;q=0.8,en;q=0.7,id;q=0.6',
+            origin:
+              'https://www.onlineconverter.com',
+            referer:
+              'https://www.onlineconverter.com/',
+            'sec-ch-ua':
+              '"Not)A;Brand";v="24", "Chromium";v="116"',
+            'sec-ch-ua-mobile': '?1',
+            'sec-ch-ua-platform': '"Android"',
+            'sec-fetch-dest': 'empty',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-site': 'same-site',
+            'user-agent':
+              'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36',
+          },
+        }
+      )
       // Membuat URL baru dengan ID
       resolve({
         url: newUrl + '/download',
       })
     } catch (error) {
       resolve({
-        msg: error?.message ? error.message : error,
+        msg: error?.message
+          ? error.message
+          : error,
       })
     }
   })

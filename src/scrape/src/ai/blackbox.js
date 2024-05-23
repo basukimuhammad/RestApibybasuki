@@ -7,7 +7,10 @@ import axios from 'axios'
  * @param {Boolean} web_search - set to true if you want to use web search. By default it is set to false.
  * @returns
  */
-const blackbox = async (prompt, web_search = false) => {
+const blackbox = async (
+  prompt,
+  web_search = false
+) => {
   const body = {
     messages: [
       {

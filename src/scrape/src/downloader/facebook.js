@@ -5,18 +5,22 @@ import fetch from 'node-fetch'
 
 async function facebook(t) {
   return new Promise(async (e, a) => {
-    const i = await fetch('https://www.getfvid.com/downloader', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        Referer: 'https://www.getfvid.com/',
-      },
-      body: new URLSearchParams(
-        Object.entries({
-          url: t,
-        })
-      ),
-    })
+    const i = await fetch(
+      'https://www.getfvid.com/downloader',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type':
+            'application/x-www-form-urlencoded',
+          Referer: 'https://www.getfvid.com/',
+        },
+        body: new URLSearchParams(
+          Object.entries({
+            url: t,
+          })
+        ),
+      }
+    )
     const o = cheerio.load(await i.text())
     e({
       result: {

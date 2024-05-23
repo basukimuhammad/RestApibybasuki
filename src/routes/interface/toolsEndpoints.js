@@ -73,7 +73,8 @@ const toolsEndpoints = {
         {
           name: 'url',
           in: 'query',
-          description: 'anime image URL to find the source ',
+          description:
+            'anime image URL to find the source ',
           required: true,
           schema: {
             type: 'string',
@@ -268,7 +269,8 @@ const toolsEndpoints = {
           schema: {
             type: 'string',
           },
-          description: 'URL of the image to be checked',
+          description:
+            'URL of the image to be checked',
         },
       ],
       responses: {
@@ -296,7 +298,8 @@ const toolsEndpoints = {
           schema: {
             type: 'string',
           },
-          description: 'URL of the web to be checked',
+          description:
+            'URL of the web to be checked',
         },
       ],
       responses: {

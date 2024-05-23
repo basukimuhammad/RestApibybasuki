@@ -18,7 +18,8 @@ apiR.get('/:username', async (req, res) => {
     const { username } = req.params
     const result = await sc.coomer(username)
     const random = pickRandom(result)
-    const imageStream = await getRandomImage(random)
+    const imageStream =
+      await getRandomImage(random)
     res.setHeader('Content-Type', 'image/jpeg')
     imageStream.pipe(res)
   } catch (error) {

@@ -12,7 +12,10 @@ const apiR = express.Router()
 const handleGetRequest = async (req, res) => {
   try {
     const { country } = req.params
-    const filePath = join('src/scrape/data/asupan/image', `${country}.json`)
+    const filePath = join(
+      'src/scrape/data/asupan/image',
+      `${country}.json`
+    )
 
     if (!fs.existsSync(filePath)) {
       return res.status(404).json({
@@ -21,10 +24,16 @@ const handleGetRequest = async (req, res) => {
       })
     }
 
-    const fileContent = fs.readFileSync(filePath, 'utf-8')
+    const fileContent = fs.readFileSync(
+      filePath,
+      'utf-8'
+    )
     const data = JSON.parse(fileContent)
 
-    if (!Array.isArray(data) || data.length === 0) {
+    if (
+      !Array.isArray(data) ||
+      data.length === 0
+    ) {
       return res.status(500).json({
         status: 'Internal Server Error',
         message: 'Invalid data format',
@@ -32,9 +41,12 @@ const handleGetRequest = async (req, res) => {
     }
 
     const randomImage = pickRandom(data)
-    const response = await axios.get(randomImage, {
-      responseType: 'stream',
-    })
+    const response = await axios.get(
+      randomImage,
+      {
+        responseType: 'stream',
+      }
+    )
 
     res.setHeader('Content-Type', 'image/jpeg')
     response.data.pipe(res)
@@ -47,6 +59,10 @@ const handleGetRequest = async (req, res) => {
   }
 }
 
-apiR.get('/:country', apiKeyMiddleware, handleGetRequest)
+apiR.get(
+  '/:country',
+  apiKeyMiddleware,
+  handleGetRequest
+)
 
 export default apiR

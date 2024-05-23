@@ -27,7 +27,8 @@ const shortUrlEndpoint = {
             enum: ['tiny', 'vurl', 'vgd', 'shrt'],
             default: 'isgd',
           },
-          description: 'The URL shortening service to use',
+          description:
+            'The URL shortening service to use',
         },
         {
           name: 'url',

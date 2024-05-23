@@ -26,7 +26,11 @@ const xnxxHits = async (period = '') => {
         .text()
         .trim()
         .replace(/\d{1,3}%/, '')
-      const duration = $(element).find('.metadata').text().trim().split('\n')[1]
+      const duration = $(element)
+        .find('.metadata')
+        .text()
+        .trim()
+        .split('\n')[1]
       const quality = $(element)
         .find('.metadata .video-hd')
         .text()

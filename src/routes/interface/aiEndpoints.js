@@ -1,6 +1,9 @@
 /** @format */
 
-const createAiEndpoint = (parameters, responses) => {
+const createAiEndpoint = (
+  parameters,
+  responses
+) => {
   return {
     get: {
       tags: ['Ai'],
@@ -86,7 +89,10 @@ const aiEndpoints = {
         description: 'The width of the image.',
         schema: {
           type: 'integer',
-          enum: [256, 512, 768, 1024, 1280, 1536, 1792, 2048],
+          enum: [
+            256, 512, 768, 1024, 1280, 1536, 1792,
+            2048,
+          ],
           default: 1024,
         },
       },
@@ -97,14 +103,18 @@ const aiEndpoints = {
         description: 'The height of the image.',
         schema: {
           type: 'integer',
-          enum: [256, 512, 768, 1024, 1280, 1536, 1792, 2048],
+          enum: [
+            256, 512, 768, 1024, 1280, 1536, 1792,
+            2048,
+          ],
           default: 1024,
         },
       },
     ],
     {
       200: {
-        description: 'Successful response with search results.',
+        description:
+          'Successful response with search results.',
         content: {
           'application/json': {
             schema: {

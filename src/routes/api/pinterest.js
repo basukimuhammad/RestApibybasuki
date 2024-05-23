@@ -28,52 +28,72 @@ async function handleGetBoard(req, res) {
 async function handleSearchBoards(req, res) {
   const query = req.query.query
   const bookmark = req.query.bookmark
-  const boardData = await sc.searchBoards(query, bookmark)
+  const boardData = await sc.searchBoards(
+    query,
+    bookmark
+  )
   await sendJSONResponse(res, boardData)
 }
 
 async function handleSearchPins(req, res) {
   const query = req.query.query
   const bookmark = req.query.bookmark
-  const pinData = await sc.searchPins(query, bookmark)
+  const pinData = await sc.searchPins(
+    query,
+    bookmark
+  )
   await sendJSONResponse(res, pinData)
 }
 
 async function handleSuggestions(req, res) {
   const id = req.query.id
   const bookmark = req.query.bookmark
-  const suggestionData = await sc.suggestions(id, bookmark)
+  const suggestionData = await sc.suggestions(
+    id,
+    bookmark
+  )
   await sendJSONResponse(res, suggestionData)
 }
 
-apiR.get('/:path', apiKeyMiddleware, async (req, res) => {
-  const path = req.path
+apiR.get(
+  '/:path',
+  apiKeyMiddleware,
+  async (req, res) => {
+    const path = req.path
 
-  try {
-    switch (path) {
-      case '/getBoard':
-        await handleGetBoard(req, res)
-        break
+    try {
+      switch (path) {
+        case '/getBoard':
+          await handleGetBoard(req, res)
+          break
 
-      case '/searchBoards':
-        await handleSearchBoards(req, res)
-        break
+        case '/searchBoards':
+          await handleSearchBoards(req, res)
+          break
 
-      case '/searchPins':
-        await handleSearchPins(req, res)
-        break
+        case '/searchPins':
+          await handleSearchPins(req, res)
+          break
 
-      case '/suggestions':
-        await handleSuggestions(req, res)
-        break
+        case '/suggestions':
+          await handleSuggestions(req, res)
+          break
 
-      default:
-        res.status(404).json({ error: 'Path not found' })
+        default:
+          res
+            .status(404)
+            .json({ error: 'Path not found' })
+      }
+    } catch (error) {
+      console.error(
+        'Internal server error:',
+        error
+      )
+      res
+        .status(500)
+        .json({ error: 'Internal server error' })
     }
-  } catch (error) {
-    console.error('Internal server error:', error)
-    res.status(500).json({ error: 'Internal server error' })
   }
-})
+)
 
 export default apiR
