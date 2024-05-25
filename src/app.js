@@ -15,7 +15,6 @@ import verifyRoutes from './routes/verifyRoutes.js'
 import R404 from './views/error.js'
 import helloRouter from './views/home.js'
 import customLogger from './lib/logger.js'
-
 const app = express()
 
 resetLimitsCron()

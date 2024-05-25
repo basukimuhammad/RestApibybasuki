@@ -4,7 +4,7 @@ import fs from 'fs/promises'
 import ora from 'ora'
 import path, { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
-// import converter from './converter.js'
+import converter from './converter.js'
 
 /**
  * Get all files with a specific extension from a directory
@@ -49,7 +49,6 @@ export default async function CombinedJSON() {
 
     return {
       openapi: '3.1.0',
-      basePath: '/',
       info: {
         title: '.M.U.F.A.R. APIs',
         version: '1.3.8',
@@ -92,34 +91,34 @@ export default async function CombinedJSON() {
 }
 
 // const writeFileWithSpinner = async (filePath, data) => {
-// const spinner = ora(`Writing to ${filePath}`).start()
-// try {
-// await fs.access(filePath, fs.constants.F_OK)
-// await fs.unlink(filePath)
-// } catch (error) {
-// // File does not exist, continue with writing
-// }
-// try {
-// await fs.writeFile(filePath, data)
-// spinner.succeed(`${filePath}`)
-// } catch (error) {
-// spinner.fail(`Failed to write to ${filePath}: ${error.message}`)
-// console.error('Error details:', error)
-// }
+  // const spinner = ora(`Writing to ${filePath}`).start()
+  // try {
+    // await fs.access(filePath, fs.constants.F_OK)
+    // await fs.unlink(filePath)
+  // } catch (error) {
+    // // File does not exist, continue with writing
+  // }
+  // try {
+    // await fs.writeFile(filePath, data)
+    // spinner.succeed(`${filePath}`)
+  // } catch (error) {
+    // spinner.fail(`Failed to write to ${filePath}: ${error.message}`)
+    // console.error('Error details:', error)
+  // }
 // }
 // const dir = dirname(fileURLToPath(import.meta.url))
 // ;(async () => {
-// try {
-// if (!process.env.NODE_ENV === 'development') return
+  // try {
+    // if (!process.env.NODE_ENV === 'development') return
 
-// const json = JSON.stringify(await CombinedJSON(), null, 2)
-// // console.log(json)
-// await writeFileWithSpinner(join(dir, '../views/pages/swagger.json'), json)
-// await writeFileWithSpinner(
-// join(dir, '../views/pages/swagger.js'),
-// await converter(json)
-// )
-// } catch (error) {
-// console.error('Error:', error.message)
-// }
+    // const json = JSON.stringify(await CombinedJSON(), null, 2)
+    // // console.log(json)
+    // await writeFileWithSpinner(join(dir, '../views/pages/swagger.json'), json)
+    // await writeFileWithSpinner(
+      // join(dir, '../views/pages/swagger.js'),
+      // await converter(json)
+    // )
+  // } catch (error) {
+    // console.error('Error:', error.message)
+  // }
 // })()

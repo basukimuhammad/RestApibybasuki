@@ -3,23 +3,23 @@
 import { Router } from 'express'
 import { serve, setup } from 'swagger-ui-express'
 import swaggerDocument from '../lib/combinedJSON.js'
-import redoc from 'redoc-express'
-const routerDocs = Router()
+// import redoc from 'redoc-express'
+const docs = Router()
 
-routerDocs.get(
-  '/redocs',
-  redoc({
-    title: '.M.U.F.A.R.',
-    specUrl: '/swagger.json',
-    nonce: '',
-    redocOptions: {
-      hideDownloadButton: true,
-    },
-  })
-)
+// docs.get(
+  // '/redocs',
+  // redoc({
+    // title: '.M.U.F.A.R.',
+    // specUrl: '/swagger.json',
+    // nonce: '',
+    // redocOptions: {
+      // hideDownloadButton: true,
+    // },
+  // })
+// )
 const swaggerDoc = await swaggerDocument()
 console.log(swaggerDoc)
-routerDocs.use(
+docs.use(
   '/docs',
   serve,
   setup(swaggerDoc, {
@@ -55,4 +55,4 @@ routerDocs.use(
   })
 )
 
-export default routerDocs
+export default docs
