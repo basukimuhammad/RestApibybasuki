@@ -42,12 +42,6 @@ const swaggerDocument = {
         200: {
           description: 'User registered successfully',
         },
-        400: {
-          description: 'Bad Request',
-        },
-        500: {
-          description: 'Internal Server Error',
-        },
       },
     },
   },
@@ -103,12 +97,6 @@ const swaggerDocument = {
             },
           },
         },
-        400: {
-          description: 'Bad Request',
-        },
-        500: {
-          description: 'Internal Server Error',
-        },
       },
     },
   },
@@ -140,12 +128,6 @@ const swaggerDocument = {
               },
             },
           },
-        },
-        400: {
-          description: 'Bad Request',
-        },
-        500: {
-          description: 'Internal Server Error',
         },
       },
     },

@@ -43,6 +43,7 @@ NoxVenenum is an experimental project for learning purposes. It's a REST API bui
     └── pages: Main application page templates.
         └── assets: Static assets (CSS, JavaScript, images) for the web pages.
 ```
+
 ## path
 
 **Ai:**

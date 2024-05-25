@@ -2,14 +2,7 @@
 
 const commonResponses = {
   200: {
-    description: 'Successful response',
-    content: {
-      'application/json': {
-        schema: {
-          $ref: '#/components/schemas/SuccessResponse',
-        },
-      },
-    },
+    $ref: '#/components/schemas/SuccessResponse',
   },
 }
 

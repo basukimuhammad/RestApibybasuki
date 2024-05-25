@@ -28,7 +28,7 @@ const importRoutes = async routeModule => {
         })
         .filter(path => path !== undefined)
 
-      console.log(`Loaded route: /${routeName} with paths:`, routePaths)
+      // console.log(`Loaded route: /${routeName} with paths:`, routePaths)
     } else {
       console.error(`Invalid route handler in ${routeModule}`)
     }

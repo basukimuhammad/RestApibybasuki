@@ -7,14 +7,7 @@ const createAnimeEndpoint = (parameters, description) => {
       parameters,
       responses: {
         200: {
-          description: 'Successful response',
-          content: {
-            'application/json': {
-              schema: {
-                $ref: '#/components/schemas/SuccessResponse',
-              },
-            },
-          },
+          $ref: '#/components/schemas/SuccessResponse',
         },
         default: {
           description: 'Unexpected error',

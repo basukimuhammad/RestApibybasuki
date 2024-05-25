@@ -18,18 +18,6 @@ async function fetchImageUrl(tag) {
   }
 }
 
-async function downloadImage(url) {
-  try {
-    const response = await axios.get(url, {
-      responseType: 'arraybuffer',
-    })
-    return Buffer.from(response.data, 'binary')
-  } catch (error) {
-    console.error('Error downloading image:', error)
-    throw new Error('Failed to download image')
-  }
-}
-
 apiR.get('/:tag', async (req, res) => {
   const { tag } = req.params
   try {

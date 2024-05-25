@@ -45,7 +45,7 @@ async function getWaifuImage(type, category) {
     const response = await axios.get(
       `https://api.waifu.pics/${type}/${category}`
     )
-    return response.data
+    return response.data.url
   } catch (error) {
     throw new Error(
       `Gagal mengambil gambar waifu dari kategori ${category}: ${error.message}`
@@ -77,7 +77,15 @@ app.get('/:type', async (req, res) => {
     }
 
     const data = await getWaifuImage(type, category)
-    await sendJSONResponse(res, data.url)
+
+    res.writeHead(200, {
+      'Content-Type': 'image/jpeg',
+    })
+
+    const response = await axios.get(data, {
+      responseType: 'stream',
+    })
+    response.data.pipe(res)
   } catch (error) {
     console.error('Gagal mengambil gambar waifu:', error.message)
     res.status(500).json({

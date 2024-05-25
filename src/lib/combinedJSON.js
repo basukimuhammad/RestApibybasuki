@@ -1,10 +1,10 @@
 /** @format */
 
-import fs from 'fs/promises' // Menggunakan versi async dari fs
+import fs from 'fs/promises'
 import ora from 'ora'
 import path, { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
-import converter from './converter.js'
+// import converter from './converter.js'
 
 /**
  * Get all files with a specific extension from a directory
@@ -74,64 +74,7 @@ export default async function CombinedJSON() {
         },
         schemas: {
           SuccessResponse: {
-            type: 'object',
-            properties: {
-              status: {
-                type: 'string',
-              },
-              code: {
-                type: 'integer',
-              },
-              author: {
-                type: 'string',
-              },
-              data: {
-                type: 'object',
-              },
-            },
-          },
-          TypeEnum: {
-            type: 'string',
-            enum: ['sfw', 'nsfw'],
-          },
-          CategoryEnum: {
-            type: 'string',
-            enum: {
-              sfw: [
-                'waifu',
-                'neko',
-                'shinobu',
-                'megumin',
-                'bully',
-                'cuddle',
-                'cry',
-                'hug',
-                'awoo',
-                'kiss',
-                'lick',
-                'pat',
-                'smug',
-                'bonk',
-                'yeet',
-                'blush',
-                'smile',
-                'wave',
-                'highfive',
-                'handhold',
-                'nom',
-                'bite',
-                'glomp',
-                'slap',
-                'kill',
-                'kick',
-                'happy',
-                'wink',
-                'poke',
-                'dance',
-                'cringe',
-              ],
-              nsfw: ['waifu', 'neko', 'trap', 'blowjob'],
-            },
+            description: 'Success',
           },
         },
       },
@@ -148,35 +91,35 @@ export default async function CombinedJSON() {
   }
 }
 
-const writeFileWithSpinner = async (filePath, data) => {
-  const spinner = ora(`Writing to ${filePath}`).start()
-  try {
-    await fs.access(filePath, fs.constants.F_OK)
-    await fs.unlink(filePath)
-  } catch (error) {
-    // File does not exist, continue with writing
-  }
-  try {
-    await fs.writeFile(filePath, data)
-    spinner.succeed(`${filePath}`)
-  } catch (error) {
-    spinner.fail(`Failed to write to ${filePath}: ${error.message}`)
-    console.error('Error details:', error)
-  }
-}
-const dir = dirname(fileURLToPath(import.meta.url))
-;(async () => {
-  try {
-    if (!process.env.NODE_ENV === 'development') return
+// const writeFileWithSpinner = async (filePath, data) => {
+// const spinner = ora(`Writing to ${filePath}`).start()
+// try {
+// await fs.access(filePath, fs.constants.F_OK)
+// await fs.unlink(filePath)
+// } catch (error) {
+// // File does not exist, continue with writing
+// }
+// try {
+// await fs.writeFile(filePath, data)
+// spinner.succeed(`${filePath}`)
+// } catch (error) {
+// spinner.fail(`Failed to write to ${filePath}: ${error.message}`)
+// console.error('Error details:', error)
+// }
+// }
+// const dir = dirname(fileURLToPath(import.meta.url))
+// ;(async () => {
+// try {
+// if (!process.env.NODE_ENV === 'development') return
 
-    const json = JSON.stringify(await CombinedJSON(), null, 2)
-    // console.log(json)
-    await writeFileWithSpinner(join(dir, '../views/pages/swagger.json'), json)
-    await writeFileWithSpinner(
-      join(dir, '../views/pages/swagger.js'),
-      await converter(json)
-    )
-  } catch (error) {
-    console.error('Error:', error.message)
-  }
-})()
+// const json = JSON.stringify(await CombinedJSON(), null, 2)
+// // console.log(json)
+// await writeFileWithSpinner(join(dir, '../views/pages/swagger.json'), json)
+// await writeFileWithSpinner(
+// join(dir, '../views/pages/swagger.js'),
+// await converter(json)
+// )
+// } catch (error) {
+// console.error('Error:', error.message)
+// }
+// })()

@@ -1219,7 +1219,7 @@
  *   responses:
  *    200:
  *      content:
- *        image/jpeg:
+ *        image/*:
  */
 /**
  * @swagger
